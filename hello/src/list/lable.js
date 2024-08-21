@@ -1,13 +1,9 @@
 import React from "react"
-
+import './style.css'
 
 class  Label extends React.Component{
     render(){
-        return (
-            <div>
-            <span>label</span>
-            </div>
-        )
+        return<span className="ite">label  </span>        
     }
 }
 
@@ -18,4 +14,4 @@ class  Label extends React.Component{
 //     </div>)
 // }
       
-export default Label; 
+export default Label;

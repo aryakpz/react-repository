@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import List from './list/list';
+import Header from './components/header';
+import Footer from './components/footer';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,52 +14,39 @@ root.render(
 
   <div className='app'>
     <div className='head'>
-      <span className='titile'> REACT CODE</span>
+      {/* <span className='titile' > REACT CODE</span>
       <span>Home</span>
       <span>Usage</span>
       <span>Setting</span>
-      <span>Logout</span>
+      <span>Logout</span> */}
+      <Header />
     </div>
     <div className='body'>
       <div className='list'>
         <div className='item'>
-        
-           <List />
-       
+
+          <List />
+
           <hr />
-          <div className='lt'>
-            title two
-          </div>
-          <div className='ld'>
-            <span>label 1</span>
-            <span>label 2</span>
-            <span>label 3</span>
-          </div>
+
+          <List />
+
           <hr />
-          <div className='lt'>
-            title three
-          </div>
-          <div className='ld'>
-            <span>label 1</span>
-            <span>label 2</span>
-            <span>label 3</span>
-          </div>
+
+          <List />
+
           <hr />
-          <div className='lt'>
-            title four
-          </div>
-          <div className='ld'>
-            <span>label 1</span>
-            <span>label 2</span>
-            <span>label 3</span>
-          </div>
+
+          <List />
+
+          <hr />
+
+         
+
         </div>
       </div>
     </div>
     <hr />
-    <div className='footer'>
-      copyright@ reactcode.in.all reversed
-    </div>
+     <Footer />
   </div>
 );
-       

@@ -1,6 +1,7 @@
 
 import React from "react";
 import Label from "./lable";
+import './style.css'
 
 
 function List() {
