@@ -18,3 +18,4 @@ export default Hello
 // JSX:== class ->className,for ->Htmlfor,onclick ->onClick,tabindex->tabIndex  
 
 // props are properties :<greet name="nk"/>
+                                                       
