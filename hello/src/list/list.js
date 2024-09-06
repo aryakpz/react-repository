@@ -4,18 +4,34 @@ import Label from "./lable";
 import './style.css'
 
 
-function List() {
-    return (
-      <div className='item'>
-        <hr />
-        <div className='lt'>
-          titles from another
-        </div>
-        <div className='ld'>
-          <Label />
-          <Label />
-        </div>
-      </div>);
-  }
-  
-  export default List;
+function List(props) {
+  const {
+    title,
+    desc,
+    active
+  } = props;
+
+  return (
+    <div className='item'>
+
+      <div className='lt'>
+        {title}
+      </div>
+      <div className='lsub'>
+        {desc}
+      </div>
+
+      <div className='ld'>
+        <Label onAction={() => { (console.log('parent')) }}
+          active={active} />
+        {/* <Label /> */}
+        {/* <Label /> */}
+        {/* <Label active/> */}
+      </div>
+
+
+    </div>);
+}
+
+
+export default List;

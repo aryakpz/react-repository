@@ -1,5 +1,8 @@
 .ite{
-    background-color: rgb(199, 181, 181);
+    color: rgb(252, 242, 242);
+    padding: 3px 10px;
+    border-radius: 5px;
+    margin-right: 4px;
 }
 
 .title{
@@ -12,4 +15,17 @@
 .ld{
     color: green;
     padding-top: 5px;
+}
+.lsub{
+    padding: 10px 0;
+}
+.item{
+  
+    border: 1px solid black;
+    margin: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: rgb(217, 224, 222);
+    border-radius: 4px;
+
 }
