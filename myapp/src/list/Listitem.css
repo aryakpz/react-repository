@@ -1,0 +1,14 @@
+.item{
+   border: 1px solid rgb(207, 204, 204); 
+   border-radius: 2px;
+   margin: 20px;
+   padding: 20px;
+}
+
+.head h4{
+    margin: 0 0  10px 0;
+}
+.desc{
+    color: grey;
+    margin-bottom: 10px;
+}

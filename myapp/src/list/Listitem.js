@@ -1,22 +1,20 @@
 
 import React from "react"
 import Label from "./Label";
+import './Listitem.css'
 
-function Listitem() {
+function Listitem(props) {
     return (<div className='item'>
-        <hr />
         <div className='head'>
-            <h4>My littile one</h4>
+            <h4>{props.title}</h4>
         </div>
         <div className='desc'>
-            This is very big description
+            {props.desc}
         </div>
         <div className='label'>
-            <Label />
-            <Label />
-            <Label />
+            <Label isactive={props.isactive}/>
+         
         </div>
-        <hr></hr>
     </div>
 )}
 
