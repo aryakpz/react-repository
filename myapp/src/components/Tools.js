@@ -9,14 +9,16 @@ class Tools extends React.Component {
         const {
             children,
             onAction,
-            labelvalue
+            labelvalue,
+            refresh,
+            back
         } = this.props
 
         // const only=React.Children.only(Children)
 
         const count = React.Children.count(children.props.children)
         return (
-            <div>                       
+            <div className="subbody">                       
                 <div className="listhead">
                     <select value={labelvalue} onChange={onAction} name="status">
                         <option value="all">All</option>
@@ -26,6 +28,11 @@ class Tools extends React.Component {
 
                     <AddNew> </AddNew>       
                 </div>
+
+
+            <div><button className="refresh"  onClick={refresh}>Refresh</button></div>
+
+            <button className="refresh" onClick={back}>Back</button>
                                   
                 {children}
                               

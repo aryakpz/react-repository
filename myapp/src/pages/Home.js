@@ -1,10 +1,9 @@
 
 import React from "react";
-import Listitem from "../list/Listitem";
 import Tools from "../components/Tools";
 import SimpleList from "../list/SimpleList";
 
-   
+const myc = React.createContext();   
 class Home extends React.Component {
 
     constructor(props) {
@@ -12,7 +11,8 @@ class Home extends React.Component {
         this.state = {
             data: [],
             active: 'all',
-         msg:''
+            msg: '',
+            showlabel: true
         }
     }
 
@@ -23,53 +23,71 @@ class Home extends React.Component {
         })
 
     }
+
     listdelete = (item) => {
         console.log("jjj", item.id)
 
         const newlist = this.state.data.filter((element) => element.id !== item.id)
         console.log(newlist)
 
-
         this.setState({
             data: newlist
         })
     }
 
+    pagerefresh = () => {
+        console.log("rrr")
 
-// =================== component did mount life cycle ===================================//
+        fetch('./data2.json')
+            .then((res) => res.json())
+            .then((data) =>
+                // console.log(data)
 
+                this.setState({
+                    data: data
+                })
+            )
+        }   
 
-componentDidMount(){
-    console.log("ijkji")
-    fetch('/data.json')
-    .then(res =>res.json())
-    .then((data)=>{
+    back = () => {
+        this.componentDidMount()
 
-        this.setState({
-            data:data
-        })
-    })
-}
+    }
+    
+// ===================  component did mount life cycle  =================================== //
 
-componentDidCatch(prop,pstate)
-{
-    console.log("i")
-    if(pstate.msg !== this.state.msg){
-    this.setState({
-        msg:'msg'
-    })
-}
-}
+    componentDidMount() {
+        console.log("ijkji")
+        fetch('/data.json')
+            .then(res => res.json())
+            .then((data) => {
 
+                this.setState({
+                    data: data
+                })
+            })
+    }
+
+    componentDidCatch(prop, pstate) {
+        console.log("i")
+        if (pstate.msg !== this.state.msg) {
+            this.setState({
+                msg: 'msg'
+            })
+        }
+    }
 
     labelclick = (arg) => {
-        // const value =
-        //   console.log("dd")
         console.log(arg)
         this.setState({
             active: arg
         })
     }
+
+    onlabekcheck = () => {
+        console.log("check")
+    }
+
     render() {
         const {
             data,
@@ -78,7 +96,7 @@ componentDidCatch(prop,pstate)
 
         const newlist = data.filter((item) => {
 
-            if (active == 'all') {
+            if (active === 'all') {
                 return true
             }
             if (active === 'active') {
@@ -90,15 +108,22 @@ componentDidCatch(prop,pstate)
             return false
         });
 
-    
         return (
-            <Tools  labelvalue={active} onAction={this.listchange}>
-                <SimpleList onlabelclick={this.labelclick} data={newlist} onAction={this.listdelete} />
 
-            </Tools>
+            <div>
+                <div className="show">
+                    <input checked={this.state.show} onChange={this.state.ronlabelcheck} type="checkbox"></input>Show Label
+                </div>
+
+                <myc.Provider value={this.state.showlabel}>
+                    <Tools labelvalue={active} onAction={this.listchange} refresh={this.pagerefresh} back={this.back}>
+                        <SimpleList onlabelclick={this.labelclick} Show Label data={newlist} onAction={this.listdelete} />
+                    </Tools>
+                </myc.Provider>
+
+            </div>
         )
-    }
+    }   
 }
-export default Home;
-
-
+ 
+export default Home;  

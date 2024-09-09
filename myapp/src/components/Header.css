@@ -6,17 +6,17 @@
     color: rgb(230, 165, 135);
     padding-left: 30px;
 }
-
 span{
     padding: 10px;
+    cursor: pointer;
 }
 .header
 {
     background-color: gray;
     padding: 30px 0px;
-
 }
 span{
     color: rgb(12, 53, 92); 
 }
+
           

@@ -9,10 +9,10 @@ function SimpleList(props){
     {
         data,
         onAction,
-        onlabelclick
+        onlabelclick,
+        // onlabelcheck
     }=props
 
-    
     return(
         <div className='list'>
         {
@@ -31,4 +31,5 @@ function SimpleList(props){
     </div>
     )
 }
+
 export default  SimpleList;        

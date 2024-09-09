@@ -1,18 +1,44 @@
-select{
-    width: 140px;
-    height: 30px;
-    font-size: 16px;
-    margin: 20px;
-    border: 2px solid rgb(23, 84, 165);
-    border-radius: 5px;
+select {
+  width: 140px;
+  height: 30px;
+  font-size: 16px;
+  margin: 20px;
+  border: 2px solid rgb(23, 84, 165);
+  border-radius: 5px;
 }
 
-.listfooter{
-   background-color: rgb(211, 204, 204); 
-   padding: 10px;
-   width: max-content;
-   margin: 10px;
-}   
- 
-  
-  
+.listfooter {
+  background-color: rgb(211, 204, 204);
+  padding: 10px;
+  width: max-content;
+  margin: 10px;
+}
+
+.refresh {
+  background-color: blue;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.show {
+  padding: 16px;
+  font-size: 20px;
+  display: flex;
+}
+
+.show input {
+  height: 18px;
+  width: 18px;
+  margin-right: 10px;
+}
+
+.subbody {
+  background-color: rgb(235, 233, 233);
+  border: 1px solid black;
+  margin: 10px;
+}

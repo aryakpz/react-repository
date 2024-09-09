@@ -16,6 +16,7 @@ class Label extends React.Component {
         }} className="sp" style={style}> {pr.isactive ? 'Active' : 'Non active'}</span>
     }
 }
+
 export default Label;
 
 

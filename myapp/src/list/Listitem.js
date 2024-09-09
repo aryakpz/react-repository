@@ -1,5 +1,7 @@
 
-import React from "react"
+
+import { useEffect } from "react";
+
 import Label from "./Label";
 import './Listitem.css'
 
@@ -12,7 +14,12 @@ function Listitem(props) {
         ondelete,
         onlabelclick
     } = props
+
+  useEffect(()=>{
+    console.log("j")
+  })
     
+     
     return (<div className='item'>
         <div className='head'>
             <h4>{title}</h4>
@@ -29,5 +36,5 @@ function Listitem(props) {
     </div>     
     )
 }
-    
-export default Listitem;
+        
+export default Listitem;  

@@ -4,7 +4,7 @@ import './Header.css'
 
 function Header(props) {
 
-  const {
+  const {      
     onselect
   }=props
 
@@ -21,7 +21,7 @@ function Header(props) {
         onselect('settings')
       }}>Setting</span>
       <span onClick={()=>{
-        onselect('logouT')
+        onselect('logout')
       }}>Logout</span>
     </div>
   )
