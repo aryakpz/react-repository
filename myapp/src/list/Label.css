@@ -1,4 +1,4 @@
-.sp{
+.sp {
   background-color: green;
   color: white;
   padding: 4px 15px;
@@ -7,6 +7,7 @@
   margin-right: 10px;
   cursor: pointer;
 }
-.sp:hover{
+
+.sp:hover {
   opacity: 0.7;
 }

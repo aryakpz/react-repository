@@ -5,23 +5,18 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import List from './list/List';
-// import Listitem from './list/Listitem';
-
-
+// import List from './list/List';
+// import Listitem from './list/Listitem';'
+import Home from './pages/Home';
+import Myapp from './pages/Myapp';
+     
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
-root.render(
-
-  <div className='app'>
-    <Header />
-    <div className='body'>
-     <List/>
-    </div>
-
-    <Footer />
     
-  </div>          
+root.render(
+    <Myapp/>
+     
 );
-            
-reportWebVitals();                                                                                                                       
+      
+reportWebVitals();  
+
+  

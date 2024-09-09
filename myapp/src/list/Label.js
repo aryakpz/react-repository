@@ -4,19 +4,47 @@ import './Label.css';
 // function Label() {
 //     return(<span> Label  0 </span>)
 // }
-class Label extends React.Component
-{
+class Label extends React.Component {
     render() {
-       const pr= this.props;
+        const pr = this.props;
 
-     const style= pr.isactive? {background:'red'}:{background:'blue'}
+        const style = pr.isactive ? { background: 'green' } : { background: 'darkOrange' }
 
-        return <span  onClick={
-            console.log("clicked")
-        } className="sp" style={style}> {pr.isactive ? 'Active':'Non active'}</span>
+        return <span onClick={() => {
+            pr.onAction(pr.isactive ? 'active':'nonactive')
+
+        }} className="sp" style={style}> {pr.isactive ? 'Active' : 'Non active'}</span>
     }
-}  
-export default Label;   
+}
+export default Label;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -38,6 +66,7 @@ export default Label;
 // JSON       : [0][4424]
 // Total      : [424][48928]
 // days       : #30
+
 
 // 0543076139
 // musthakhir@gammaholdings.ae

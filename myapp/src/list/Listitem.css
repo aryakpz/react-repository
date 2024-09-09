@@ -4,11 +4,27 @@
    margin: 20px;
    padding: 20px;
 }
-
 .head h4{
     margin: 0 0  10px 0;
-}
-.desc{
+}  
+.desc{   
     color: grey;
     margin-bottom: 10px;
+}               
+.head{
+    display: flex;
+    justify-content: space-between;
+}
+.dlt{
+    /* box-shadow: 0 3px 10px ; */
+    font-size: 15px;
+    padding: 5px;
+    background-color: rgb(184, 56, 56);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.dlt:hover{
+    background-color: rgb(238, 85, 85);
+ 
 }
