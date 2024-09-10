@@ -1,129 +1,85 @@
-
-import React from "react";
+import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {deleteAndUpdate, getDataInfo} from '../redux-toolkit/dataInfoReducer';
 import Tools from "../components/Tools";
 import SimpleList from "../list/SimpleList";
+import Justinfo from "../list/justinfo";
 
-const myc = React.createContext();   
-class Home extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: [],
-            active: 'all',
-            msg: '',
-            showlabel: true
+import './Home.css';
+
+import {
+    MyNewContext
+} from './mycontexts';
+
+function Home() {
+
+    const [activeState, setActiveState] = useState('all');
+    const dispatch = useDispatch();
+    const data = useSelector(state => state.dataInfo.data);
+    const loading = useSelector(state => state.dataInfo.loading);
+    const error = useSelector(state => state.dataInfo.error);
+
+    useEffect(() => {
+        dispatch(getDataInfo());
+    }, [dispatch]);
+
+
+    const pagerefresh = () => {
+        getDataInfo(dispatch);
+    }
+
+    const listchange = (evt) => {
+        const value = evt.target.value;
+        setActiveState(value);
+
+    }
+
+    const listdelete = (item) => {
+        dispatch(deleteAndUpdate(item.id))
+    }
+
+    const labelclick = (arg) => {
+        setActiveState(arg);
+    }
+
+    const handleAdd = (item) => {
+        // setData([item, ...data]);
+    }
+
+
+    const newList = data.filter((item) => {
+        if(activeState === 'all') {
+            return true;
         }
-    }
-
-    listchange = (event) => {
-        const value = event.target.value
-        this.setState({
-            active: value
-        })
-
-    }
-
-    listdelete = (item) => {
-        console.log("jjj", item.id)
-
-        const newlist = this.state.data.filter((element) => element.id !== item.id)
-        console.log(newlist)
-
-        this.setState({
-            data: newlist
-        })
-    }
-
-    pagerefresh = () => {
-        console.log("rrr")
-
-        fetch('./data2.json')
-            .then((res) => res.json())
-            .then((data) =>
-                // console.log(data)
-
-                this.setState({
-                    data: data
-                })
-            )
-        }   
-
-    back = () => {
-        this.componentDidMount()
-
-    }
-    
-// ===================  component did mount life cycle  =================================== //
-
-    componentDidMount() {
-        console.log("ijkji")
-        fetch('/data.json')
-            .then(res => res.json())
-            .then((data) => {
-
-                this.setState({
-                    data: data
-                })
-            })
-    }
-
-    componentDidCatch(prop, pstate) {
-        console.log("i")
-        if (pstate.msg !== this.state.msg) {
-            this.setState({
-                msg: 'msg'
-            })
+        if(activeState === 'active') {
+            return item.isActive === true;
         }
-    }
+        if(activeState === 'non-active'){
+            return item.isActive === false;
+        }
+        return false;   
+    });
 
-    labelclick = (arg) => {
-        console.log(arg)
-        this.setState({
-            active: arg
-        })
-    }
-
-    onlabekcheck = () => {
-        console.log("check")
-    }
-
-    render() {
-        const {
-            data,
-            active
-        } = this.state
-
-        const newlist = data.filter((item) => {
-
-            if (active === 'all') {
-                return true
-            }
-            if (active === 'active') {
-                return item.isactive === true
-            }
-            if (active === 'nonactive') {
-                return item.isactive === false
-            }
-            return false
-        });
-
-        return (
-
+    return (
+        (
             <div>
-                <div className="show">
-                    <input checked={this.state.show} onChange={this.state.ronlabelcheck} type="checkbox"></input>Show Label
-                </div>
 
-                <myc.Provider value={this.state.showlabel}>
-                    <Tools labelvalue={active} onAction={this.listchange} refresh={this.pagerefresh} back={this.back}>
-                        <SimpleList onlabelclick={this.labelclick} Show Label data={newlist} onAction={this.listdelete} />
-                    </Tools>
-                </myc.Provider>
-
+                {
+                    loading && <div className="loading"> Loading ... </div>
+                }
+                {
+                    error && <div className="error"> {error} </div>
+                }
+                <MyNewContext.Provider value={100}>
+                        <Tools labelValue={activeState} onAction={listchange} count={data.length} onRefresh={pagerefresh}>
+                            <SimpleList onLabelClick={handleLabelClick} data={newList} onAction={handleDelete} />
+                        </Tools>
+                </MyNewContext.Provider>
             </div>
         )
-    }   
-}
- 
-export default Home;  
+    );
+    
+}  
+
+export default Home; 

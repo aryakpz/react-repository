@@ -12,8 +12,9 @@ function SimpleList(props){
         onlabelclick,
         // onlabelcheck
     }=props
+      
+    return(        
 
-    return(
         <div className='list'>
         {
             data.map((item) => {

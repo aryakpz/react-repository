@@ -6,6 +6,7 @@ import AddNew from "./AddNew";
 class Tools extends React.Component {
 
     render() {
+        console.log("render tools")
         const {
             children,
             onAction,

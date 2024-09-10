@@ -22,6 +22,7 @@ class AddNew extends React.Component{
   }
    
     render(){
+      console.log("render addnew")
         return(
             <div>
                 <input onChange={this.change}/>

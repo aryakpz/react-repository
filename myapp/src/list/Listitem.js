@@ -1,10 +1,10 @@
 
 
 import { useEffect } from "react";
-
-import Label from "./Label";
+// import Label from "./Label";
+import Label2 from "./Label2";
 import './Listitem.css'
-
+       
 function Listitem(props) {
 
     const {
@@ -19,7 +19,6 @@ function Listitem(props) {
     console.log("j")
   })
     
-     
     return (<div className='item'>
         <div className='head'>
             <h4>{title}</h4>
@@ -29,12 +28,19 @@ function Listitem(props) {
             {desc}
         </div>
         <div className='label'>
-            <Label onAction={() => {
+            <Label2 onAction={() => {
             }} isactive={isactive} />
  
         </div>
     </div>     
-    )
-}
-        
+   )
+} 
+     
 export default Listitem;  
+
+         
+
+
+
+
+

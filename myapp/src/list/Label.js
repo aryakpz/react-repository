@@ -1,12 +1,28 @@
 
-import React from "react"
+import React, { useContext } from "react"
 import './Label.css';
+import { Mycontext ,Mynew} from "../pages/Home";
+
+
 // function Label() {
 //     return(<span> Label  0 </span>)
 // }
-class Label extends React.Component {
-    render() {
-        const pr = this.props;
+function Label(props) {
+    
+        const value=useContext(Mycontext)
+
+
+        const v=useContext(Mynew)
+        console.log(v)
+         
+        const pr = props;
+
+
+        if( value === false)
+            {
+                return null;
+            }
+            else{
 
         const style = pr.isactive ? { background: 'green' } : { background: 'darkOrange' }
 
@@ -16,6 +32,7 @@ class Label extends React.Component {
         }} className="sp" style={style}> {pr.isactive ? 'Active' : 'Non active'}</span>
     }
 }
+
 
 export default Label;
 

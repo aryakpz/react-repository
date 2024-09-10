@@ -17,6 +17,8 @@ componentWillUnmount(){
 }
     render()
     {
+
+        console.log('render dummy')
         return (
             <div>
                 {this.props.name}

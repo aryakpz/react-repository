@@ -41,6 +41,7 @@ class Myapp extends React.Component {
     }
 
     render() {
+        console.log("render myapp")
         return (
             <div className='app'>
                 <Header onselect={this.menuselect} />
