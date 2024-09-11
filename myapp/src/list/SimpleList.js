@@ -1,6 +1,4 @@
 
-
-
 import React from "react";
 import Listitem from "./Listitem";
 function SimpleList(props){
@@ -12,10 +10,10 @@ function SimpleList(props){
         onlabelclick,
         // onlabelcheck
     }=props
-      
+                                      
     return(        
 
-        <div className='list'>
+        <div className='list'>  
         {
             data.map((item) => {
                 return <Listitem key={item.title}

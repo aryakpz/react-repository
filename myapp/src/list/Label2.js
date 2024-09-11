@@ -13,9 +13,7 @@ class Label2 extends React.Component {
 
         const style = pr.isactive ? { background: 'green' } : { background: 'darkOrange' }
 
-        return (
-        
-                         
+        return (     
                     <Mycontext>
                     {
                         (val)=>{
@@ -24,7 +22,7 @@ class Label2 extends React.Component {
                         if(val== false){
                             return null
                         }
-                        else{
+                        else{              
                                return(
                                 <span onClick={() => {
     
