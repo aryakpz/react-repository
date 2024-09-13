@@ -22,7 +22,7 @@
 //         </div>
 //     )
 // }
-
+           
 // export default Hook4;
 
 // import React from "react";
@@ -45,8 +45,7 @@
 //         {
 //     console.log('updating document title')
 //     document.title=`clicked ${this.state.count} times`
-// }
-// }
+// } }
 
 //     render(){
 //         return(
@@ -81,7 +80,7 @@ function Hook4()
             <input type="text" value={name} onChange={e=>setname(e.target.value)}></input>
             <button onClick={()=>setcount(count+1 )}>click {count} times</button>
         </div>
-    )
-}     
+    ) 
+}         
 
-export default Hook4;                 
+export default Hook4;                   
