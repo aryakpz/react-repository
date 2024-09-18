@@ -15,4 +15,4 @@ function Coma(){
         </div>
     )
 }
-export default Coma;
+export default Coma;   

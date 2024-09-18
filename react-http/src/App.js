@@ -74,4 +74,5 @@ export default App;
 //         </cont.Provider> */}
 
 //         {/* <Reducercount/> */}  
-//         {/* <Reducertwo/>    
+//         {/* <Reducertwo/>     
+
