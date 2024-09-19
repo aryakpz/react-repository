@@ -1,25 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
+import { Usestate } from './components/usestate/usestate';
+import { Usereducer } from './components/usereducer/usereducer';
+import { Objectstate } from './components/immutable';
+import { Arraystate } from './components/usestate/array';
+import { Parent } from './components/parent';
+import { Child } from './components/child';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {/* <Usestate/> */}
+          {/* <Usereducer/> */}
+        {/* <Objectstate/> */}
+        {/* <Arraystate/> */}
+        <Parent>
+          <Child/>
+        </Parent>
       </header>
     </div>
-  );
+  );  
 }
-
-export default App;
+ 
+export default App;   
