@@ -22,6 +22,7 @@
 //                     <div>
 //                        {/* <input type="text"></input> */}
 //                     </div>
+
 //                     <div>
 //                         <button onClick={() => handlechange(1)}>1</button>
 //                         <button onClick={() => handlechange(2)}>2</button>
@@ -39,6 +40,7 @@
 //                         <button onClick={() => handlechange('/')}>/</button>
 //                         <button onClick={() => handlechange('=')}>=</button>
 //                     </div>
+
 //                 </div>
 //             </div>
 //         </div>
@@ -80,11 +82,9 @@ function Calculator() {
     return (
         <div className="calculator">
             {/* <div>
-
                 <input type="text" value={expression} readOnly />
             </div>
             <div>
-
                 <button onClick={() => handleClick("1")}>1</button>
                 <button onClick={() => handleClick("2")}>2</button>
                 <button onClick={() => handleClick("3")}>3</button>
@@ -103,10 +103,10 @@ function Calculator() {
                 <button onClick={() => handleClick("C")}>C</button>
             </div> */}
             <div>
-                <Display value={expression}/>
+                <Display value={expression} />
             </div>
             <div>
-            <Element handleClick={handleClick}/>
+                <Element handleClick={handleClick} />
             </div>
         </div>
     );

@@ -1,21 +1,22 @@
+
 import React from 'react';
 import './App.css';
 import { Greet } from './component/greet';
-import { Person } from './component/person';
+// import { Person } from './component/person';
 import { Status } from './component/status';
 import { Heading } from './component/heading';
 import { Oscar } from './component/oscar';
 import { Button } from './component/button';
 import Calclator from './component/calculator';
-
-
+import { Container } from './component/style';
+import Login from './appnew/login';
 
 function App() {
-  const personname = {
+  const personname = { 
     first: 'brukey',
     last: 'wayne'
-  }
-
+  }            
+        
   const namelist = [
     {
       first: 'bruce',
@@ -26,32 +27,39 @@ function App() {
       last: 'kent '
     },
     {
-      first: 'prince',
+      first: 'prince',   
       last: 'john'
     }
-  ]
-  return (
+  ]  
+       
+  const name="arya"
+  return (        
     <div className="App">
       <header className="App-header">
         {/* <Greet name='arya' islogg={false}/> */}
-        {/* <Person name={namelist}/> */}
+        {/* <Person names={namelist}/> */}
         {/* <Status status='success'/> */}
         {/* <Heading>
-          sum
+        sum
         </Heading> */}
         {/* <Oscar>
-          <Heading>oscar goes to leonardo
-          </Heading>
+        <Heading>oscar goes to leonardo
+        </Heading>
         </Oscar> */}
-
         {/* <Button handleclick={(event)=>{
-          console.log('clicked',event)
-      
-        }}/> */}
-        <Calclator/>
-      </header>
-    </div>
-  );
-}
+        console.log('clicked',event)      
+        }}/> */}     
+        {/* <Calclator/> */}   
+        {/* <Container styles={{border :'1px solid white',padding:'1rem'}}  name='arya'/> */}
 
+
+      {/*=========================================================================================== */}
+
+       <Login/>
+       
+      </header>
+    </div>   
+  );  
+}   
+          
 export default App;
