@@ -44,12 +44,12 @@
 // its a higherorder component  to prevent a fun component from being rerenderd if its props or state do not change
 // performance optimisaton
 
+
 // usecall back
 // ============
 // it is a hook that will return a memoized version of the callback fn that only changes if one of the dependancies has changed.\
 // it is usefull when passing callbacks to optimized child components that rely on reference equalityto prevent unnecessary renders.
                      
-
 
 // custom hooks
 // ============
@@ -59,9 +59,7 @@
 
 
 const a=[2,5,3,5] 
-          
 const sum=a.reduce((t,i)=>{
-    return t+i             
-},0)       
-
-alert (sum)
+    return t+i;             
+},0)          
+alert (sum) 

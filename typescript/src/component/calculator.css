@@ -1,0 +1,63 @@
+/* General styling for the calculator container */
+.calculator {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for the display area */
+  .display {
+    width: 100%;
+    padding: 10px;
+    font-size: 2rem;
+    text-align: right;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Grid for the buttons */
+  .button-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+  }
+  
+  /* Styling individual buttons */
+  .button-panel button {
+    padding: 20px;
+    font-size: 1.5rem;
+    border: none;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+  }
+  
+  /* Hover and active states for buttons */
+  .button-panel button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .button-panel button:active {
+    background-color: #ccc;
+  }
+  
+  /* Special styling for "equal" and "clear" buttons */
+  .button-equal {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .button-clear {
+    background-color: #f44336;
+    color: white;
+  }
+  
