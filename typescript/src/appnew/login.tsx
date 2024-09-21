@@ -9,14 +9,14 @@ function Login(){
         setlog(true)
     }
     const logout=()=>{
-        setlog(0)
+        setlog(false)
     }
 
     return(
         <div>
              <button onClick={login}>login</button>
              <button onClick={logout}>logout</button>
-             <div>user is {islog.length ?'logged in...':'logged out'}</div>
+             <div>user is {islog ?'logged in...':'logged out'}</div>
         </div>
     )}
      

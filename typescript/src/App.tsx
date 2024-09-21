@@ -10,6 +10,8 @@ import { Button } from './component/button';
 import Calclator from './component/calculator';
 import { Container } from './component/style';
 import Login from './appnew/login';
+import Logintype from './appnew/typelogin';
+import { Counter } from './appnew/counter';
 
 function App() {
   const personname = { 
@@ -55,8 +57,11 @@ function App() {
 
       {/*=========================================================================================== */}
 
-       <Login/>
+       {/* <Login/> */}
+       {/* <Logintype/> */}
        
+       <Counter/>
+
       </header>
     </div>   
   );  

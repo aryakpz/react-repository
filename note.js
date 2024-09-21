@@ -62,4 +62,16 @@ const a=[2,5,3,5]
 const sum=a.reduce((t,i)=>{
     return t+i;             
 },0)          
-alert (sum) 
+alert (sum)
+
+
+// Typing     : [38wpm][91%]
+// Focus      : [10hr 1min]
+// CT         : [9hr 33min][733hr 26min]
+// ACT        : [8hr 19min][697hr 58min]
+// HTML       : [0][13480]
+// CSS        : [0][22766]
+// JS         : [400][13460]
+// JSON       : [0][4428]
+// Total      : [400][54451]
+// days       : #3
