@@ -30,3 +30,7 @@ HAVING COUNT(inventory.inventory_id) = 0;`
 //     language.name
 // ORDER BY 
 //     count desc
+
+
+
+

@@ -12,6 +12,10 @@ import { Container } from './component/style';
 import Login from './appnew/login';
 import Logintype from './appnew/typelogin';
 import { Counter } from './appnew/counter';
+import { Themecontext } from './appnew/themecontext';
+import { Box } from './appnew/box';
+import { User } from './appnew/user';
+import { UserContextProvider } from './appnew/authuser';
 
 function App() {
   const personname = { 
@@ -60,8 +64,14 @@ function App() {
        {/* <Login/> */}
        {/* <Logintype/> */}
        
-       <Counter/>
+       {/* <Counter/> */}
+      
+         {/* <Box/> */}
 
+         <UserContextProvider>
+         <User/>
+         </UserContextProvider>
+      
       </header>
     </div>   
   );  
