@@ -20,6 +20,13 @@ import { Themecontextprovider } from './usecontext/themecontext';
 import { Box } from './usecontext/box';
 import { User2 } from './usecontext/user2';
 import { Counter2 } from './class/counter';
+import { Private } from './auth/private';
+import { Profile } from './auth/profile';
+import { List } from './generic/list';
+import { Random } from './restriction/random';
+import { Toast } from './template/toast';
+import { Custombutton } from './html/button';
+import { Text } from './polymorphic/test';
 
 function App() {
   const personname = {
@@ -67,19 +74,50 @@ function App() {
         {/* <Counter/> */}
         {/* <Box /> */}
         {/* <Themecontextprovider>
-        
           <Box/>
         </Themecontextprovider> */}
         {/* <UserContextProvider>
         <User2/>
         </UserContextProvider> */}
         {/* <Counter message="the count value is ="></Counter> */}
-        {/* <Counter2 message='the count is ='>
-        </Counter2> */}
+        {/* <Counter2 message='the count is ='/> */}
+        {/* <Private islog={false} Component={Profile}/> */}
+        {/* <List 
+        items={['banana','orange','apple','cherry']}
+        onClick={(item)=>console.log(item)}/> */}
+        {/* <List items={[1,2,3]} onClick={(item)=>console.log(item)}/> */}
+        {/* 
+         <List items={[
+              {
+                id:1,
+                first: 'bruce',    
+                last: 'wayne'
+              },
+              {
+                id:2,
+                first: 'clark',
+                last: 'kent '
+              },
+              {
+                id:3,
+                first: 'prince',
+                last: 'john'
+              }
+         ]} onClick={(item) =>console.log(item)}/> */}
+        {/* <Random value={10} isneg /> */}
+        {/* <Toast position="left"></Toast> */}
+        {/* <Custombutton variant="primary " onClick={() => console.log('clicked')}> 
+        
+        primary button
+      
+        </Custombutton> */}
 
+            <Text as='h1' size='lg'> heading</Text>
+            <Text as='p' size='sm' color='primary'>paragraph</Text>
+        
       </header>
     </div>
   );
 }
 
-export default App;
+export default App; 

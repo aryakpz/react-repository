@@ -5,18 +5,18 @@ type Counterprop={
     message:string
 }
 
-type Counterstate={
+type Counterstate={  
     count:number
 }
-
-export class Counter2 extends Component<Counterprop,Counterstate>{
+     
+export class Counter2 extends Component <Counterprop,Counterstate>{
     state ={
-        count :0
+        count :0,
     }
-    
+
     handle =()=>{
-        this.setState((prestate)=>({
-            count :prestate.count +1
+        this.setState((prevState)=>({
+            count :prevState.count +1
         }))
 }
     render(){
