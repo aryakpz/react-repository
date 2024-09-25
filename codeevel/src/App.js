@@ -13,35 +13,39 @@ import Custom2 from './customhook/custome2';
 import Counterone from './customhook/counter';
 import Countertwo from './customhook/counter';
 import Form1 from './customhook/form1';
+import Parent from './demo/Parent';
+import { Parent5 } from './component/incorrect/parent5';
+import { Cparent } from './component/context/cparent';
+import { ChildA } from './component/context/cchild';
 function App() {
 
-  return(
+  return (
 
     <div className="App">
-    <header className="App-header">
+      <header className="App-header">
 
-    <div>
-      {/* <Data/> */}
-      {/* <Countertwo/> */}
-      {/* <Parentcomp/> */}
-      {/* <Memos/> */}
-      {/* <Focus/> */}
-      {/* <Classtimer/> */}
-      {/* <Hooktimer/> */}
-      {/* <Custom/> */}
-      {/* <Custom2/>  */}
-      {/* <Counterone/> */}
-      {/* <Countertwo/> */}
-      <Form1/>
-       
-    </div>
-
-    
-    </header>
+        <div>
+          {/* <Data/> */}
+          {/* <Countertwo/> */}
+          {/* <Parentcomp/> */}
+          {/* <Memos/> */}
+          {/* <Focus/> */}
+          {/* <Classtimer/> */}
+          {/* <Hooktimer/> */}
+          {/* <Custom/> */}
+          {/* <Custom2/>  */}
+          {/* <Counterone/> */}
+          {/* <Countertwo/> */}
+          {/* <Form1/> */}
+          {/* <Parent5/> */}
+          <Cparent>
+            <ChildA />
+          </Cparent>
+        </div>
+      </header>
     </div>
   )
 
 }
-  
-export default App;                    
-    
+ 
+export default App;

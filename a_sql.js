@@ -34,3 +34,4 @@ HAVING COUNT(inventory.inventory_id) = 0;`
 
 
 
+

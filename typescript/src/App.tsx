@@ -11,18 +11,22 @@ import Calclator from './component/calculator';
 import { Container } from './component/style';
 import Login from './appnew/login';
 import Logintype from './appnew/typelogin';
-import { Counter } from './appnew/counter';
-import { Themecontext } from './appnew/themecontext';
-import { Box } from './appnew/box';
+// import { Counter } from './appnew/counter';
+// import { Themecontext } from './appnew/themecontext';
+// import { Box } from './appnew/box';
 import { User } from './appnew/user';
 import { UserContextProvider } from './appnew/authuser';
+import { Themecontextprovider } from './usecontext/themecontext';
+import { Box } from './usecontext/box';
+import { User2 } from './usecontext/user2';
+import { Counter2 } from './class/counter';
 
 function App() {
-  const personname = { 
+  const personname = {
     first: 'brukey',
     last: 'wayne'
-  }            
-        
+  }
+
   const namelist = [
     {
       first: 'bruce',
@@ -33,13 +37,13 @@ function App() {
       last: 'kent '
     },
     {
-      first: 'prince',   
+      first: 'prince',
       last: 'john'
     }
-  ]  
-       
-  const name="arya"
-  return (        
+  ]
+
+  const name = "arya"
+  return (
     <div className="App">
       <header className="App-header">
         {/* <Greet name='arya' islogg={false}/> */}
@@ -54,27 +58,28 @@ function App() {
         </Oscar> */}
         {/* <Button handleclick={(event)=>{
         console.log('clicked',event)      
-        }}/> */}     
-        {/* <Calclator/> */}   
+        }}/> */}
+        {/* <Calclator/> */}
         {/* <Container styles={{border :'1px solid white',padding:'1rem'}}  name='arya'/> */}
+        {/*=========================================================================================== */}
+        {/* <Login/> */}
+        {/* <Logintype/> */}
+        {/* <Counter/> */}
+        {/* <Box /> */}
+        {/* <Themecontextprovider>
+        
+          <Box/>
+        </Themecontextprovider> */}
+        {/* <UserContextProvider>
+        <User2/>
+        </UserContextProvider> */}
+        {/* <Counter message="the count value is ="></Counter> */}
+        {/* <Counter2 message='the count is ='>
+        </Counter2> */}
 
-
-      {/*=========================================================================================== */}
-
-       {/* <Login/> */}
-       {/* <Logintype/> */}
-       
-       {/* <Counter/> */}
-      
-         {/* <Box/> */}
-
-         <UserContextProvider>
-         <User/>
-         </UserContextProvider>
-      
       </header>
-    </div>   
-  );  
-}   
-          
+    </div>
+  );
+}
+
 export default App;
