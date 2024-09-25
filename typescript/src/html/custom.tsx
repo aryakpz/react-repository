@@ -6,4 +6,6 @@ export const Customcomponent =(props:React.ComponentProps<typeof Greet>)=>{
           {props.name}
         </div>
     )
-}
+}                    
+
+

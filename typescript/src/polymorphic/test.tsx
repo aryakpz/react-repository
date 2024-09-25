@@ -20,5 +20,5 @@ export const Text=<E extends React.ElementType ='div'>({size,color,children,as}:
             {children}
         </Component>
     )
-}                
-
+}
+  
