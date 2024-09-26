@@ -20,7 +20,6 @@
 import React from "react";
 
 const Studentlist = ({ student, onDelete }) => {
-
     return (<div>
         <h2>student list</h2>
         <ul>
@@ -33,4 +32,5 @@ const Studentlist = ({ student, onDelete }) => {
     </div>)
 }
 
-export default Studentlist
+export default Studentlist ;
+    
