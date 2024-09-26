@@ -10,4 +10,4 @@ export const Details=()=>{
             <h2>details about the user {userId}</h2>
         </div>
     )  
-}  
+}         
