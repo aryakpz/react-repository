@@ -18,15 +18,19 @@ function App() {
   //   setstudent ((prevStudent) =>prevStudent.filter((student)=>student.id !== id))
   // }
   return (
-    <div className="App">
+    <div className="App">            
 
          {/* <h1>school management system</h1>
          <Add onAdd={handleadd}/>
          <Studentlist student={student} onDelete={handledelete}/> */}
-
+                        
          <Home/>
     </div>
   );
 }
+                                                            
 
-export default App;
+
+
+
+

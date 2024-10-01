@@ -1,0 +1,41 @@
+
+nav{
+    box-sizing: border-box;
+    justify-content: space-between;
+    display: flex;
+    padding: 20px;
+    background-color: rgb(58, 57, 57);
+}
+
+nav .list
+{
+    gap: 20px;
+    display: flex;
+}
+
+nav  a{
+    color: white;
+    text-decoration: none;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+}
+ nav a:active{
+    color: bisque;
+    text-decoration: underline;
+ }
+ nav a:hover{
+    color: rgb(142, 233, 203);
+ }
+
+nav img {
+    filter: invert();
+    height: 30px;
+    width: 20px;
+ }
+
+
+
+
+
+ 

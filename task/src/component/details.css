@@ -1,0 +1,32 @@
+.details {
+    background-image: url('/src/asset/pensil.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 92.5vh;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+.subdetail {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    height: 50vh;
+    gap: 20px;
+    background-color: transparent;
+    max-width: 500px;
+    width: 100%;
+    align-items: center;
+    margin-top: 60px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px;
+    backdrop-filter: blur(3px);
+}
+.subdetail button:hover{
+    transform: scale(0.98);
+    background-color:rgb(224, 168, 46) ;
+}
+.subdetail button {
+    max-width: 200px;
+    width: 100%;
+}
