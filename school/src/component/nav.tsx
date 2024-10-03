@@ -8,13 +8,13 @@ export const Navbar = () => {
     return (
         <nav>
             <div>
-              <img src={award}></img>
+                <img src={award}></img>
             </div>
             <div className="list">
-            <NavLink to={'/'}>Home</NavLink>
-            <NavLink to={'details'}>Details</NavLink>
+                <NavLink to={'/'}>Home</NavLink>
+                <NavLink to={'details'}>Details</NavLink>
             </div>
         </nav>
     )
 
-}
+}  

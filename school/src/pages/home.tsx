@@ -11,10 +11,12 @@ export const Home: React.FC = () => {
     return (
         <div className='mainsec'>
             <div className='datasec'>
-                <h1>Begin your Hero's Journey</h1>
-                <button onClick={() => navigate('/Details')}>View More </button>
+                 <h1>Begin your Hero's Journey</h1>
+                 <button onClick={() => navigate('/Details')}>View More </button>
             </div>
-        </div>
-    );
-};
-               
+        </div> 
+    );       
+};    
+
+
+
