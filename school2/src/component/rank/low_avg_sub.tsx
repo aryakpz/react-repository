@@ -24,7 +24,7 @@ const LowestAverageDisplay: React.FC<lowestAverageDisplayProps> = ({ students })
     });
      
     let lowAvgSubject = '';
-    let lowestAvg = 0;
+    let lowestAvg = Infinity;
          
         
     for (const subject in subjectTotals) {

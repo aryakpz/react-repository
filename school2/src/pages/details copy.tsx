@@ -23,17 +23,6 @@ import Highsubjecttotal from "../component/rank/highsubjectmrk";
 import Lowsubjecttotal from "../component/rank/lowsubjectmark";
 import Studenthighavg from "../component/subject/StuHighAvg";
 import Studentlowavg from "../component/subject/StuLowAvg";
-import CountStudentsAboveMark from "../component/cutoff/CountAbovemark";
-import CountStudentsBelowMark from "../component/cutoff/CountBelowmark";
-import HighestPercentage from "../component/percentage/high_per_mark";
-import LowestPercentage from "../component/percentage/low_per_mark";
-import HighestSubjectPercentage from "../component/percentage/subject_high_per";
-import LowestSubjectPercentage from "../component/percentage/subject_low_per";
-import Toppercentagestudent from "../component/rank/toppercentage";
-import Lowpercentagestudent from "../component/rank/lowpercentage";
-import Studentsubjecthigh from "../component/subject/StudentSubjecthigh";
-import SubAverageMarks from "../component/subject/Subjectavgmark";
-import SubTotalMarks from "../component/subject/Subtotalmark";
 
 type ClassData = {
     name: string;
@@ -53,7 +42,7 @@ export const Details: React.FC = () => {
     const [selectedAnswer, setSelectedAnswer] = useState<JSX.Element | null>(null);
     const [selectedStudent, setSelectedStudent] = useState('');
     const [selectedSubjects, setSelectedSubjects] = useState<{ subject: string; mark: number }[]>([]);
-    const [displayType, setDisplayType] = useState<'student' | 'marks' | 'average' | 'total' | 'top' | 'low' | 'highper' | 'lowper' | 'lowsub' | 'highsub' | 'avgmark' |'totalmark' |null>(null);
+    const [displayType, setDisplayType] = useState<'student' | 'marks' | 'average' | 'total' | 'top' | 'low' | null>(null);
     const [selectedSubject, setSelectedSubject] = useState<string>('');
 
     useEffect(() => {
@@ -94,7 +83,7 @@ export const Details: React.FC = () => {
         }
     };
 
-    const handleStudentChange = (studentName: string, type: 'student' | 'marks' | 'average' | 'total' | 'highsub' | 'lowsub', label: string) => {
+    const handleStudentChange = (studentName: string, type: 'student' | 'marks' | 'average' | 'total', label: string) => {
         clearDisplay();
         setSelectedStudent(studentName);
         setSelectedSubjects([]);
@@ -115,20 +104,6 @@ export const Details: React.FC = () => {
             setDisplayType('top');
         } else if (action === 'low') {
             setDisplayType('low');
-        }
-        else if (action === 'highper') {
-            setDisplayType('highper')
-        }
-        else if (action === 'lowper') {
-            setDisplayType('lowper')
-        }
-        else if(action ==='avgmark')
-        {
-            setDisplayType('avgmark')
-        }
-        else if(action ==='totalmark')
-        {
-            setDisplayType('totalmark')
         }
 
     };
@@ -192,56 +167,18 @@ export const Details: React.FC = () => {
     }
 
 
-    const showstutopavg = () => {
-        if (classObj)
-            setSelectedAnswer(<Studenthighavg students={classObj.students} />)
+    const showstutopavg =()=>{
+       if(classObj)
+        setSelectedAnswer(<Studenthighavg students={classObj.students}/>)
     }
 
 
-    const showstulowavg = () => {
-        if (classObj)
-            setSelectedAnswer(<Studentlowavg students={classObj.students} />)
+    const showstulowavg =()=>{
+     if(classObj)
+        setSelectedAnswer(<Studentlowavg students={classObj.students}/>)
     }
 
 
-
-    const countAboveMark = (subject: string, cutoff: number) => {
-        if (classObj) {
-
-            const count = classObj.students.filter(student => {
-
-                const markInSubject = student.marks.find(mark => mark.subject === subject);
-                return markInSubject && markInSubject.mark > cutoff;
-            }).length;
-
-
-            setSelectedAnswer(
-                <p>
-                    {count} student.
-                </p>
-            );
-        }
-    };
-
-    const showhighpercentage = () => {
-        if (classObj)
-            setSelectedAnswer(<HighestPercentage students={classObj.students} />)
-    }
-
-    const showlowestpercentage = () => {
-        if (classObj)
-            setSelectedAnswer(<LowestPercentage students={classObj.students} />)
-    }
-
-    const showsubjecthighper = () => {
-        if (classObj)
-            setSelectedAnswer(<HighestSubjectPercentage students={classObj.students} />)
-    }
-
-    const showsubjectlowper = () => {
-        if (classObj)
-            setSelectedAnswer(<LowestSubjectPercentage students={classObj.students} />)
-    }
 
 
     return (
@@ -288,21 +225,6 @@ export const Details: React.FC = () => {
                     {classObj && (
                         <SubjectSelection
                             subjects={Array.from(new Set(classObj.students.flatMap(student => student.marks.map(mark => mark.subject))))}
-                            onSelectSubject={(subject, label) => handleSubjectChange(subject, 'avgmark')}
-                            label="Average of Mark in subject vise"
-                        />
-                    )}
-                      {classObj && (
-                        <SubjectSelection
-                            subjects={Array.from(new Set(classObj.students.flatMap(student => student.marks.map(mark => mark.subject))))}
-                            onSelectSubject={(subject, label) => handleSubjectChange(subject, 'totalmark')}
-                            label="Total Mark in subject vise"
-                        />
-                    )}
-
-                    {classObj && (
-                        <SubjectSelection
-                            subjects={Array.from(new Set(classObj.students.flatMap(student => student.marks.map(mark => mark.subject))))}
                             onSelectSubject={(subject, label) => handleSubjectChange(subject, 'top')}
                             label="Highest mark scorer in subject"
                         />
@@ -324,6 +246,7 @@ export const Details: React.FC = () => {
                     <p onClick={showoverallmark}>Overall mark in the class</p>
                     <p onClick={showavgallsub}>Average mark of each subject</p>
                     <p onClick={showtotalallsub}>Total mark of each subject</p>
+
                     <p onClick={showhightotal}> Subject with highest total mark</p>
                     <p onClick={showlowtotal}>Subject with lowest total mark</p>
                     <p onClick={showstutopavg}>Student with hihgest average mark</p>
@@ -331,58 +254,8 @@ export const Details: React.FC = () => {
                     <p onClick={showtopper}>Highest mark scorer</p>
                     <p onClick={showlower}> Lowesr mark scorer</p>
 
-                    {classObj &&
-                        <CountStudentsAboveMark students={
-                            classObj.students} setSelectedAnswer={setSelectedAnswer} />
-                    }
-
-                    {classObj &&
-                        <CountStudentsBelowMark students={
-                            classObj.students} setSelectedAnswer={setSelectedAnswer}
-                        />
-                    }
-                    <p onClick={showhighpercentage}>Student with highest percentage</p>
-                    <p onClick={showlowestpercentage}>Student with lowesr percentage</p>
-                    <p onClick={showsubjecthighper}>Subject with high percerntage</p>
-                    <p onClick={showsubjectlowper}>Subject with low percentage</p>
-
-
-                    {classObj && (
-                        <SubjectSelection
-                            subjects={Array.from(new Set(classObj.students.flatMap(student => student.marks.map(mark => mark.subject))))}
-                            onSelectSubject={(subject, label) => handleSubjectChange(subject, 'highper')}
-                            label="Highest percentage of mark in subject"
-                        />
-                    )}
-
-                    {classObj && (
-                        <SubjectSelection
-                            subjects={Array.from(new Set(classObj.students.flatMap(student => student.marks.map(mark => mark.subject))))}
-                            onSelectSubject={(subject, label) => handleSubjectChange(subject, 'lowper')}
-                            label="Lowest percentage of mark in subject"
-                        />
-                    )}
-
-
-                    {classObj && (
-                        <StudentSelection
-                            students={classObj.students}
-                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'highsub', label)}
-                            label="Highest percentage of student"
-                        />
-                    )}
-
-                    {classObj && (
-                        <StudentSelection
-                            students={classObj.students}
-                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'lowsub', label)}
-                            label="Lowest percentage of student"
-                        />
-                    )}
 
                 </div>
-
-
 
                 <div className="answersec">
                     <div>{selectedAnswer}</div>
@@ -415,21 +288,6 @@ export const Details: React.FC = () => {
                         />
                     )}
 
-
-                    {displayType ==='avgmark' && classObj &&(
-                      <SubAverageMarks
-                      students={classObj.students}
-                      subject={selectedSubject}
-                    />
-                    )}
-
-                     {/* {displayType === 'totalmark' && classObj &&(
-                        <SubTotalMarks
-                        students={classObj.students}
-                        subject={selectedSubjects}
-                        />
-                     )} */}
-                                                                                      
                     {displayType === 'top' && classObj && (
                         <TopScorerDisplay
                             students={classObj.students}
@@ -445,31 +303,11 @@ export const Details: React.FC = () => {
 
                     )}
 
-                    {displayType === 'highper' && classObj && (
-                        <Toppercentagestudent
-                            students={classObj.students}
-                            subject={selectedSubject}
-                        />
-                    )}
 
-                    {displayType === 'lowper' && classObj && (
-                        <Lowpercentagestudent
-                            students={classObj?.students}
-                            subject={selectedSubject}
-                        />
-                    )}
 
-                    {/* {displayType === 'highsub' && classObj && (
-
-                        <Studentsubjecthigh
-                            selectedStudent={selectedStudent}
-                            selectedSubjects={selectedSubjects}
-                        />
-                    )} */}     
-                   
- 
                 </div>
             </div>
         </div>
     );
-};      
+};
+

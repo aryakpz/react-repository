@@ -958,26 +958,26 @@ export const Details: React.FC = () => {
                     <p>
                         Percentage of students who score above the cutoff
                         <div>
-                            <select onChange={(e)=>setSelectedSubject(e.target.value)}>
+                            <select onChange={(e) => setSelectedSubject(e.target.value)}>
                                 <option value="">Select Subject</option>
                                 {
-                                    classObj ?.students 
-                                    .flatMap(student =>student.marks.map(mark =>mark.subject))
-                                    .filter((subject,index,self)=>self.indexOf(subject)===index)
-                                    .map((subject,index)=>(
-                                        <option key={index} value={subject}>
-                                            {subject}
-                                        </option>
-                                    ))
+                                    classObj?.students
+                                        .flatMap(student => student.marks.map(mark => mark.subject))
+                                        .filter((subject, index, self) => self.indexOf(subject) === index)
+                                        .map((subject, index) => (
+                                            <option key={index} value={subject}>
+                                                {subject}
+                                            </option>
+                                        ))
                                 }
                             </select>
-                            <select onChange={(e)=>setSelectedSubject(e.target.value)}>
+                            <select onChange={(e) => setSelectedSubject(e.target.value)}>
                                 <option value="">Select cuttoff</option>
-                                {}
+                                { }
                             </select>
                         </div>
                     </p>
-                    
+
 
                 </div>
                 <div className="answersec">
