@@ -10,7 +10,7 @@ const StudentDisplay: React.FC<StudentDisplayProps> = ({ selectedStudent, select
             {selectedStudent && (
                 <div>
                     <h3>Subjects of {selectedStudent}:</h3>
-                    {selectedSubjects.length > 0 ? (
+                  
                         <ul>
                             {selectedSubjects.map((subj, index) => (
                                 <li key={index}>
@@ -18,9 +18,7 @@ const StudentDisplay: React.FC<StudentDisplayProps> = ({ selectedStudent, select
                                 </li>
                             ))}
                         </ul>
-                    ) : (
-                        <p>No subjects found for this student.</p>
-                    )}
+                   
                 </div>
             )}
         </div>

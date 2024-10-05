@@ -682,7 +682,7 @@ export const Details: React.FC = () => {
                 // Check if the student scored above the cutoff mark in all subjects
                 return student.marks.every(mark => mark.mark < cutoffMark);
             });
-
+               
             // Display the result
             const count = Students.length;
             setSelectedAnswer(
@@ -986,4 +986,7 @@ export const Details: React.FC = () => {
             </div>
         </div>
     );
-};                    
+};                   
+
+
+

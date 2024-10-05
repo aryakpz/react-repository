@@ -20,7 +20,6 @@ const Studenthighavg: React.FC<StudentAvgprops> = ({ students }) => {
 
     const maxAverage = Math.max(...studentAverages.map(student => student.average));
 
-
     const topScorer = studentAverages.find(student => student.average === maxAverage);
 
 

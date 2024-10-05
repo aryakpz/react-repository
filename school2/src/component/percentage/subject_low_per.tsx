@@ -45,15 +45,13 @@ const LowestSubjectPercentage: React.FC<LowestSubjectPercentageProps> = ({ stude
     return (
         <div>
             <h3> Lowest Percentage:</h3>
-            {lowestPercentageSubjects.length > 0 ? (
+           
                 <ul>
                     {lowestPercentageSubjects.map((subject, index) => (
                         <li key={index}>{subject}</li>
                     ))}
                 </ul>
-            ) : (
-                <p>No subjects found.</p>
-            )}
+          
         </div>
     );
 };

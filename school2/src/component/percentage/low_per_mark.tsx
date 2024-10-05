@@ -28,21 +28,19 @@ const LowestPercentage: React.FC<LowPercentageProps> = ({ students }) => {
 
             return acc;
         },
-        { lowest: Infinity, names: [] as string[] } // Initialize lowest to Infinity
+        { lowest: Infinity, names: [] as string[] } 
     );
 
     return (
         <div>
             <h3>Students:</h3>
-            {lowestPercentageStudents.length > 0 ? (
+           
                 <ul>
                     {lowestPercentageStudents.map((name, index) => (
                         <li key={index}>{name}</li>
                     ))}
                 </ul>
-            ) : (
-                <p>No students found.</p>
-            )}
+           
         </div>
     );
 };

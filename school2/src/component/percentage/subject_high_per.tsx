@@ -45,15 +45,13 @@ const HighestSubjectPercentage: React.FC<HighestSubjectPercentageProps> = ({ stu
     return (
         <div>
             <h3>Highest Percentage:</h3>
-            {highestPercentageSubjects.length > 0 ? (
+           
                 <ul>
                     {highestPercentageSubjects.map((subject, index) => (
                         <li key={index}>{subject}</li>
                     ))}
                 </ul>
-            ) : (
-                <p>No subjects found.</p>
-            )}
+          
         </div>
     );
 };

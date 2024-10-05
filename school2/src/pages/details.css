@@ -50,6 +50,7 @@
     display: flex;
     flex-flow: column;
     box-shadow: 0 3px 5px;
+    overflow: scroll;
 }
 
 .questionsec p {

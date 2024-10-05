@@ -29,15 +29,13 @@ const HighestPercentage: React.FC<HighestPercentageProps> = ({ students }) => {
     return (
         <div>
             <h3>Student :</h3>
-            {highestPercentageStudents.length > 0 ? (
+           
                 <ul>
                     {highestPercentageStudents.map((name, index) => (
                         <li key={index}>{name}</li>
                     ))}
                 </ul>
-            ) : (
-                <p>No students found.</p>
-            )}
+         
         </div>
     );
 };

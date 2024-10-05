@@ -11,25 +11,25 @@ type Student = {
 };
 
 type StudentsubjecthighProps = {
-    selectedStudent: Student | null; // The selected student object
-    selectedSubjects: string[]; // Array of subjects to be considered
+    selectedStudent: Student | null; 
+    selectedSubjects: string[]; 
 };
 
 const Studentsubjecthigh: React.FC<StudentsubjecthighProps> = ({
     selectedStudent,
     selectedSubjects,
 }) => {
-    // Function to find the highest percentage in the selected subjects
+
     const getHighestPercentage = () => {
-        if (!selectedStudent) return null; // Return null if no student is selected
+        if (!selectedStudent) return null;
 
         const totalMarks = selectedSubjects.reduce((acc, subject) => {
             const mark = selectedStudent.marks.find(m => m.subject === subject);
-            return mark ? acc + mark.mark : acc; // Sum the marks for selected subjects
+            return mark ? acc + mark.mark : acc; 
         }, 0);
 
-        const percentage = (totalMarks / (selectedSubjects.length * 100)) * 100; // Assuming max marks per subject is 100
-        return percentage.toFixed(2); // Return percentage with 2 decimal places
+        const percentage = (totalMarks / (selectedSubjects.length * 100)) * 100; 
+        return percentage.toFixed(2); 
     };
 
     const highestPercentage = getHighestPercentage();
@@ -39,11 +39,9 @@ const Studentsubjecthigh: React.FC<StudentsubjecthighProps> = ({
             <h3>
                 {selectedStudent ? `${selectedStudent.name}'s Highest Percentage` : 'No Student Selected'}
             </h3>
-            {highestPercentage !== null ? (
+          
                 <p>Highest Percentage: {highestPercentage}%</p>
-            ) : (
-                <p>No subjects selected or no marks available.</p>
-            )}
+           
         </div>
     );
 };
