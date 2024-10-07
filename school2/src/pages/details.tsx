@@ -32,7 +32,7 @@ import HighestSubjectPercentage from "../component/percentage/subject_high_per";
 import LowestSubjectPercentage from "../component/percentage/subject_low_per";
 import Toppercentagestudent from "../component/rank/toppercentage";
 import Lowpercentagestudent from "../component/rank/lowpercentage";
-import Studentsubjecthigh from "../component/subject/StudentSubjecthigh";
+import StudentPercentageHigh from "../component/subject/StudentSubjecthigh";
 import SubAverageMarks from "../component/subject/Subjectavgmark";
 import SubTotalMarks from "../component/subject/Subtotalmark";
 import CutoffInAll from "../component/cutoff/cutoffinall";
@@ -63,8 +63,27 @@ import SubjectAboveClassAvg from "../component/subject/SubjectAboveClassAvg";
 import SubjectBelowClassAvg from "../component/subject/SubjectBelowClassAvg";
 import PercentageAboveEachSubject from "../component/percentage/PercentageAboveEachSubject";
 import PercentageBelowEachSubject from "../component/percentage/PercentageBelowEachSubject";
-import AboveAtleastOne from "../component/percentage/Aboveatleastone";
+import AboveAtleastOne from "../component/percentage/Aboveatleastone"
 import BelowAtleastOne from "../component/percentage/Belowatleastone";
+import PercentageAboveSpecificInMajority from "../component/percentage/AboveMajoritySubject";
+import PercentageBelowSpecificInMajority from "../component/percentage/BelowMajoritySubejct";
+import StudentPercentageLow from "../component/subject/StudentSubejctlow";
+import Specificstudentpercentage from "../component/percentage/specificstudentpercentage";
+import Specificstudentpercentagebelow from "../component/percentage/Specificstudentpercentagebelow";
+import AvgAboveAtLeastOne from "../component/percentage/AvgAboveAtleastone";
+import AvgBelowAtleastOne from "../component/percentage/Avgbelowatleastone";
+import StudentsAboveAverage from "../component/student/AbovespecificStudent";
+import StudentsBelowAverage from "../component/student/BelowspecificStudent";
+
+import SubjectsAboveAverage from "../component/student/AboveSubjectavg";
+import SubjectsBelowAverage from "../component/student/Belowsubjectavg";
+import HighestPercentageSubjects from "../component/student/HighAvgStudent";
+import LowestPercentageSubjects from "../component/student/LeastAvgStudent";
+import LowestPercentageAboveAverage from "../component/student/AboveLowScore";
+import LowestPercentageBelowAverage from "../component/student/BelowLowScore";
+import PercentageAboveAverageInSubject from "../component/student/PercentageAboveAtleastone";
+import PercentageBelowAverageInSubject from "../component/student/PercentageBelowatleastone";
+import MarkSelection from "../component/cutoff/markselection";
 
 
 type ClassData = {
@@ -86,8 +105,13 @@ export const Details: React.FC = () => {
     const [selectedAnswer, setSelectedAnswer] = useState<JSX.Element | null>(null);
     const [selectedStudent, setSelectedStudent] = useState('');
     const [selectedSubjects, setSelectedSubjects] = useState<{ subject: string; mark: number }[]>([]);
-    const [displayType, setDisplayType] = useState<'student' | 'marks' | 'average' | 'total' | 'top' | 'low' | 'highper' | 'lowper' | 'lowsub' | 'highsub' | 'avgmark' | 'totalmark' | null>(null);
+    const [displayType, setDisplayType] = useState<
+        'student' | 'marks' | 'average' | 'total' | 'top' | 'low' | 'highper' | 'lowper' | 'lowsub' | 'highsub' |
+        'avgmark' | 'totalmark' | 'abovemajor' | 'belowmajority' | 'specificabove' | 'specificbelow' | 'aboveone' |
+        'belowone' | 'abovestd' | 'belowstd' | 'abovesubject' | 'belowsubject' | 'abovehigh' | 'belowhigh' |
+        'abovelow' | 'belowlow' | 'mark' | 'lowsub2' | 'highsub2' |'abovemajor1' |'belowmajority1'| null>(null);
     const [selectedSubject, setSelectedSubject] = useState<string>('');
+    const [mark, setmark] = useState<number>(0)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -127,7 +151,11 @@ export const Details: React.FC = () => {
         }
     };
 
-    const handleStudentChange = (studentName: string, type: 'student' | 'marks' | 'average' | 'total' | 'highsub' | 'lowsub', label: string) => {
+    const handleStudentChange = (studentName: string, type: 'student' |
+        'marks' | 'average' | 'total' | 'highsub' | 'lowsub' | 'abovemajor' | 'belowmajority' |
+        'specificabove' | 'specificbelow' | 'aboveone' | 'belowone' | 'abovestd' | 'belowstd' |
+        'abovesubject' | 'belowsubject' | 'abovehigh' | 'belowhigh' | 'abovelow' | 'belowlow' | 
+        'lowsub2' | 'highsub2' | 'abovemajor1'|'belowmajority1', label: string) => {
         clearDisplay();
         setSelectedStudent(studentName);
         setSelectedSubjects([]);
@@ -137,6 +165,7 @@ export const Details: React.FC = () => {
             const student = classObj.students.find(student => student.name === studentName);
             if (student) {
                 setSelectedSubjects(student.marks);
+                setDisplayType(type)
             }
         }
     };
@@ -164,6 +193,9 @@ export const Details: React.FC = () => {
 
     };
 
+    const handlemarkchange = (mark: number, type: 'mark') => {
+        setmark(mark)
+    }
     const showtopper = () => {
         clearDisplay();
         if (classObj) {
@@ -208,32 +240,38 @@ export const Details: React.FC = () => {
     };
 
     const showtotalallsub = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<Displaytotalallsub students={classObj.students} />)
     }
 
     const showhightotal = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<Highsubjecttotal students={classObj.students} />)
 
     }
 
     const showlowtotal = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<Lowsubjecttotal students={classObj.students} />)
     }
 
     const showstutopavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<Studenthighavg students={classObj.students} />)
     }
 
     const showstulowavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<Studentlowavg students={classObj.students} />)
     }
 
     const countAboveMark = (subject: string, cutoff: number) => {
+        clearDisplay();
         if (classObj) {
 
             const count = classObj.students.filter(student => {
@@ -252,6 +290,7 @@ export const Details: React.FC = () => {
     };
 
     const countcutoffall = (cutoffMark: number) => {
+        clearDisplay();
         if (classObj) {
             const Students = classObj.students.filter(student => {
 
@@ -269,31 +308,42 @@ export const Details: React.FC = () => {
     };
 
     const showhighpercentage = () => {
+        clearDisplay()
         if (classObj)
             setSelectedAnswer(<HighestPercentage students={classObj.students} />)
+
     }
 
     const showlowestpercentage = () => {
+        clearDisplay()
         if (classObj)
             setSelectedAnswer(<LowestPercentage students={classObj.students} />)
+
     }
 
     const showsubjecthighper = () => {
+        clearDisplay()
         if (classObj)
             setSelectedAnswer(<HighestSubjectPercentage students={classObj.students} />)
+
     }
 
     const showsubjectlowper = () => {
+        clearDisplay()
         if (classObj)
             setSelectedAnswer(<LowestSubjectPercentage students={classObj.students} />)
+
     }
 
     const highestmarksubject = () => {
+        clearDisplay()
         if (classObj)
             setSelectedAnswer(<Highsubjectmark students={classObj.students} />)
+
     }
 
     const lowmarksubject = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<Lowsubjectmark students={classObj.students} />)
     }
@@ -306,138 +356,175 @@ export const Details: React.FC = () => {
 
     //49
     const showeachresult = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<ShowEachResult students={classObj.students} />)
     }
 
     const showeachavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<ShowEachAvg students={classObj.students} />)
     }
 
     const highestEachSubject = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<HighEachSubject students={classObj.students} />)
     }
 
     const lowestEachSubject = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<LowEachSubject students={classObj.students} />)
     }
 
     const studentaboveavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<Studentaboveavg students={classObj.students} />)
     }
 
     const studentbelowavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<Studentbelowavg students={classObj.students} />)
     }
 
     const subjectaboveclassavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<SubjectAboveClassAvg students={classObj.students} />)
     }
 
     const subjectbelowclassavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<SubjectBelowClassAvg students={classObj.students} />)
     }
 
     const percentageAboveEachSubject = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<PercentageAboveEachSubject students={classObj.students} />)
     }
-    
-    const percentageBelowEachSubject=()=>{
-        if(classObj)
-            setSelectedAnswer(<PercentageBelowEachSubject  students={classObj.students} />)
+
+    const percentageBelowEachSubject = () => {
+        clearDisplay();
+        if (classObj)
+            setSelectedAnswer(<PercentageBelowEachSubject students={classObj.students} />)
 
     }
-    const aboveatleastone=()=>{
-        if(classObj)
-            setSelectedAnswer(<AboveAtleastOne students={classObj.students}  />)
+    const aboveatleastone = () => {
+        clearDisplay();
+        if (classObj)
+            setSelectedAnswer(<AboveAtleastOne students={classObj.students} />)
     }
-    const belowatleastone=()=>{
-        if(classObj)
+    const belowatleastone = () => {
+        clearDisplay();
+        if (classObj)
             setSelectedAnswer(< BelowAtleastOne students={classObj.students} />)
     }
 
     //67
     const showAboveAvgClass = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<ShowAboveAvgClass students={classObj.students} />)
     }
 
     const showBelowAvgClass = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<BelowClassAverage students={classObj.students} />)
     }
 
     const showAboveClass = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<AboveclassMajority students={classObj.students} />)
     }
 
     const showBelowClass = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<BelowClassMajority students={classObj.students} />)
     }
 
     const subjectabovemajority = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<SubjectAboveMajority students={classObj.students} />)
     }
 
     const subjectbelowmajority = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<SubjectBelowMajority students={classObj.students} />)
     }
+    // const specificstudentpercentage =()=>{
+    //     clearDisplay()
+    //     if(classObj)
+    //         setSelectedAnswer(<Specificstudentpercentage students ={classObj.students}/>)
+    // }
+    const percentageaboveatleastone = () => {
+        clearDisplay()
+        if (classObj)
+            setSelectedAnswer(<PercentageAboveAverageInSubject students={classObj.students} />)
+    }
 
+    const percetagebelowalteastone = () => {
+        clearDisplay()
+        if (classObj)
+            setSelectedAnswer(<PercentageBelowAverageInSubject students={classObj.students} />)
 
-    // 89
+    }
     const showallaboveavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<AboveAvgAllSub students={classObj.students} />)
     }
 
     const showallbelowavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<BelowAvgAllSub students={classObj.students} />)
     }
 
     const showallabovemajority = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<AboveMajority students={classObj.students} />)
     }
 
     const showallbelowmajority = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<BelowMajority students={classObj.students} />)
     }
 
     const showsubjectaboveavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<AboveSubjectavg students={classObj.students} />)
     }
 
     const showsubjectbelowavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<BelowSubjectavg students={classObj.students} />)
     }
     const percentageaboveavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<PercentageAboveAvg students={classObj.students} />)
     }
 
     const percentagebelowavg = () => {
+        clearDisplay();
         if (classObj)
             setSelectedAnswer(<PercentageBelowAvg students={classObj.students} />)
     }
-    
-
-
 
     return (
         <div className="classsec">
@@ -479,7 +566,6 @@ export const Details: React.FC = () => {
                             label="Total mark of Student"
                         />
                     )}
-
                     {classObj && (
                         <SubjectSelection
                             subjects={Array.from(new Set(classObj.students.flatMap(student => student.marks.map(mark => mark.subject))))}
@@ -582,7 +668,6 @@ export const Details: React.FC = () => {
                         />
                     )}
 
-
                     {/* 49 */}
                     <p onClick={showeachresult}>Student with total of each subject</p>
                     <p onClick={showeachavg}> Student with Average of Each subject</p>
@@ -594,6 +679,12 @@ export const Details: React.FC = () => {
                     <p onClick={studentbelowavg}>Students below class average Marks</p>
                     <p onClick={subjectaboveclassavg}>Subjects in which the average marks are above the class average marks</p>
                     <p onClick={subjectbelowclassavg}>Subjects in which the average marks are Below the class average marks</p>
+
+
+                    {/* {classObj && (
+                        <MarkSelection onMarkChange={handlemarkchange("mark",label)} />
+                    )} */}
+
 
                     {/* <p onClick={atlestonetop}>Students toppers in subject</p> */}
 
@@ -608,19 +699,165 @@ export const Details: React.FC = () => {
                     <p onClick={showBelowClass}>Below the class average marks in the majority of subjects.</p>
                     <p onClick={subjectabovemajority}>Majority of students scored above the class average marks</p>
                     <p onClick={subjectbelowmajority}>Majority of students scored below the class average marks</p>
-                    {/* <p onClick={}></p> */}
 
-                    {/* 85 */}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'specificabove', label)}
+                            label="percentage of students who scored above the average marks of a specific student in each subject."
+                        />
+                    )
+                    }
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'specificbelow', label)}
+                            label="percentage of students who scored below the average marks of a specific student in each subject."
+
+                        />)}
+
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "aboveone", label)}
+                            label="percentage of students who scored above the average marks of a specific student in at least one subject" />
+
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "belowone", label)}
+                            label="percentage of students who scored below the average marks of a specific student in atleast one subject"
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "abovestd", label)}
+                            label="student who scored above the average marks of a specific student in all subjects."
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "belowstd", label)}
+                            label="student who scored below the average marks of a specific student in all subjects"
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "abovesubject", label)}
+                            label="subject in which the average marks are above the average marks of a specific student.."
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "belowsubject", label)}
+                            label="subject in which the average marks are below the average marks of a specific student."
+                        />
+                    )}
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "abovehigh", label)}
+                            label=" subject highest percentage of students scored above the average marks of a specific student." />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "belowhigh", label)}
+                            label="subject in which the highest percentage of students scored below the average marks of a specific student." />
+                    )}
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "abovelow", label)}
+                            label=" subject  in which lowest percentage of students scored above the average marks of a specific student." />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, "belowlow", label)}
+                            label="subject in which the lowest percentage of students scored below the average marks of a specific student." />
+                    )}
+
                     <p onClick={percentageaboveavg}>Percentage of students above the averge</p>
                     <p onClick={percentagebelowavg}>Percetntage of stduents below the average</p>
+                    <p onClick={percentageaboveatleastone}> percentage of students who scored above the average marks of the class in at least one subject.</p>
+                    <p onClick={percetagebelowalteastone}> percentage of students who scored below the average marks of the class in at least one subject.</p>
 
-                    {/* 89 */}
+
                     <p onClick={showallaboveavg}>Student above average in all Subject</p>
                     <p onClick={showallbelowavg}>Student below average in all Subject</p>
                     <p onClick={showallabovemajority}>Above average in majority of subjects</p>
                     <p onClick={showallbelowmajority}>Below average in majority of subjects</p>
                     <p onClick={showsubjectaboveavg}>Subject score above the average</p>
                     <p onClick={showsubjectbelowavg}>Subject score below the average</p>
+
+
+
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'abovemajor', label)}
+                            label=" percentage of students who scored above the average marks of a specific student in the majority of subjects."
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'belowmajority', label)}
+                            label="Percentage of students who scored below the average marks of a specific student in the majority of subjects"
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'abovemajor1', label)}
+                            label=" percentage of students who scored above the average marks of a specific student in the majority of subjects."
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'belowmajority1', label)}
+                            label="Percentage of students who scored below the average marks of a specific student in the majority of subjects"
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'highsub', label)}
+                            label="subject in which the highest percentage of students scored above the average marks of student."
+                        />
+                    )}
+
+                    {classObj && (
+                        <StudentSelection
+                            students={classObj.students}
+                            onSelectStudent={(studentName, label) => handleStudentChange(studentName, 'lowsub', label)}
+                            label="subject in which the lowest percentage of students scored above the average marks of student."
+
+                        />
+                    )}
+
                 </div>
 
                 {/* ========================================================================================================================================================= */}
@@ -698,16 +935,157 @@ export const Details: React.FC = () => {
                         />
                     )}
 
-                    {/* {displayType === 'highsub' && classObj && (
-                        <Studentsubjecthigh
+                    {displayType === 'highsub' && classObj && (
+                        <StudentPercentageHigh
+                            students={classObj.students}
                             selectedStudent={selectedStudent}
-                            selectedSubjects={selectedSubjects}
-                        />
-                     )}*/}
+                        // selectedSubjects={selectedSubjects}
 
+                        />
+                    )}
+
+                    {displayType === 'lowsub' && classObj && (
+                        <StudentPercentageLow
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+
+                    {displayType === 'specificabove' && classObj && (
+
+                        <Specificstudentpercentage
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+
+                    {displayType === 'specificbelow' && classObj && (
+                        <Specificstudentpercentagebelow
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+
+                    {displayType === 'aboveone' && classObj && (
+                        <AvgAboveAtLeastOne
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+
+                        />
+                    )}
+                    {
+                        displayType === 'belowone' && classObj && (
+                            <AvgBelowAtleastOne
+                                students={classObj.students}
+                                selectedStudent={selectedStudent} />
+                        )
+                    }
+                    {/* 95 */}
+                    {displayType === 'abovemajor' && classObj && (
+                        <PercentageAboveSpecificInMajority
+                            students={classObj?.students}
+                            // subject={selectedSubject}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+
+                    {displayType === 'belowmajority' && classObj && (
+                        <PercentageBelowSpecificInMajority
+                            students={classObj.students}
+                            selectedStudent={selectedStudent} />
+                    )}
+                    {displayType === 'abovemajor1' && classObj && (
+                        <PercentageAboveSpecificInMajority
+                            students={classObj?.students}
+                            // subject={selectedSubject}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+
+                    {
+                        displayType === 'belowmajority1' && classObj && (
+                            <PercentageBelowSpecificInMajority
+                                students={classObj.students}
+                                selectedStudent={selectedStudent} />
+                        )
+                    }
+                    {displayType === 'abovestd' && classObj && (
+                        <StudentsAboveAverage
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+                    {displayType === 'belowstd' && classObj && (
+                        <StudentsBelowAverage
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+
+                    )}
+                    {displayType === 'abovehigh' && classObj && (
+                        <HighestPercentageSubjects
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+                    {displayType === 'belowhigh' && classObj && (
+                        <LowestPercentageSubjects
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+
+                    )}
+                    {displayType === 'abovesubject' && classObj && (
+                        <SubjectsAboveAverage
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+                    {displayType === 'belowsubject' && classObj && (
+                        <SubjectsBelowAverage
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+
+                    )}
+                    {displayType === 'abovelow' && classObj && (
+                        <LowestPercentageAboveAverage
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+                    {displayType === 'belowlow' && classObj && (
+                        <LowestPercentageBelowAverage
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+
+                    )}
+                    {displayType === 'highsub2' && classObj && (
+                        <StudentPercentageHigh
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        // selectedSubjects={selectedSubjects}
+                        />
+                    )}
+                    {displayType === 'lowsub2' && classObj && (
+                        <StudentPercentageLow
+                            students={classObj.students}
+                            selectedStudent={selectedStudent}
+                        />
+                    )}
+
+                    {/* {displayType === 'mark' && classObj && (
+
+                        <HighestPercentageSubjects
+                            students={classObj.students}
+                            thresholdMark={mark}  />
+
+
+                    )} */}
 
                 </div>
             </div>
         </div>
     );
-};
+}       

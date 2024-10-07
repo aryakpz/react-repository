@@ -60,12 +60,13 @@ const CountStudentsAboveMark: React.FC<CountStudentsAboveMarkProps> = ({ student
                         } else {
                             setSelectedAnswer(<p>Please select both</p>);
                         }
-                    }} >
+                    }} >   
                     Get Count
-                </button>
-            </div>
-        </p>
+                </button>   
+            </div>   
+        </p>    
     );
 };
 
 export default CountStudentsAboveMark;
+  

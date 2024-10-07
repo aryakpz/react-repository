@@ -9,32 +9,32 @@ type Student = {
     }[];
 };
 
-type HighestPercentageSubjectProps = {
+type LowestPercentageSubjectProps = {
     students: Student[];
     selectedStudent: string; 
 };
 
-const StudentPercentageHigh: React.FC<HighestPercentageSubjectProps> = ({ students, selectedStudent }) => {
-    const [highestPercentageSubjects, setHighestPercentageSubjects] = useState<{ subject: string, percentage: number }[]>([]);
+const StudentPercentageLow: React.FC<LowestPercentageSubjectProps> = ({ students, selectedStudent }) => {
+    const [lowestPercentageSubjects, setLowestPercentageSubjects] = useState<{ subject: string, percentage: number }[]>([]);
 
     useEffect(() => {
         if (students.length > 0 && selectedStudent) {
-            calculateHighestPercentageSubjects();
+            calculateLowestPercentageSubjects();
         }
     }, [students, selectedStudent]);
 
-    const calculateHighestPercentageSubjects = () => {
-
+    const calculateLowestPercentageSubjects = () => {
+        // Find the specific student by name
         const specificStudent = students.find(student => student.name === selectedStudent);
         if (!specificStudent) return;
 
         const subjectPercentages: { [subject: string]: number } = {};
 
-      
+        // Step 1: Loop through each subject in the specific student's marks
         specificStudent.marks.forEach(mark => {
             let studentsAboveCount = 0;
 
-           
+            // Step 2: Count how many students scored above the specific student's mark in that subject
             students.forEach(student => {
                 const studentMarkForSubject = student.marks.find(m => m.subject === mark.subject);
                 if (studentMarkForSubject && studentMarkForSubject.mark > mark.mark) {
@@ -42,34 +42,32 @@ const StudentPercentageHigh: React.FC<HighestPercentageSubjectProps> = ({ studen
                 }
             });
 
-          
+            // Step 3: Calculate the percentage for this subject
             const percentage = (studentsAboveCount / students.length) * 100;
             subjectPercentages[mark.subject] = percentage;
         });
 
-  
-        const highestPercentage = Math.max(...Object.values(subjectPercentages));
-        const subjectsWithHighestPercentage = Object.entries(subjectPercentages)
-            .filter(([_, percentage]) => percentage === highestPercentage)
+        // Step 4: Find the subject(s) with the lowest percentage
+        const lowestPercentage = Math.min(...Object.values(subjectPercentages));
+        const subjectsWithLowestPercentage = Object.entries(subjectPercentages)
+            .filter(([_, percentage]) => percentage === lowestPercentage)
             .map(([subject, percentage]) => ({ subject, percentage }));
 
-        setHighestPercentageSubjects(subjectsWithHighestPercentage);
+        setLowestPercentageSubjects(subjectsWithLowestPercentage);
     };
 
     return (
         <p>
-            <span>Highest Percentage{selectedStudent}</span>
-
+            <span>Subjects & percentage {selectedStudent}</span>
             <ul>
-                {highestPercentageSubjects.map(({ subject, percentage }) => (
+                {lowestPercentageSubjects.map(({ subject, percentage }) => (
                     <li key={subject}>
-                     {subject}: {percentage.toFixed(2)}%
-                
+                        {subject}: {percentage.toFixed(2)}%
                     </li>
-                 ))} 
+                ))}
             </ul>
-           </p>
+        </p>
     );
 };
 
-export default StudentPercentageHigh;
+export default StudentPercentageLow;
