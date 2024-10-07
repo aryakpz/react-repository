@@ -1,25 +1,28 @@
-
-
 import React, { useState } from 'react';
 
-const MarkSelection: React.FC<{ onMarkChange: (mark: number) => void }> = ({ onMarkChange }) => {
-    const [inputMark, setInputMark] = useState<number>(0);
+interface MarkSelectionProps {
+    onMarkChange: (mark: number) => void;
+}
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value);
-        setInputMark(value);
-        onMarkChange(value); 
+const MarkSelection: React.FC<MarkSelectionProps> = ({ onMarkChange }) => {
+    const [selectedMark, setSelectedMark] = useState<number>(1); // Default selection
+
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const mark = parseInt(e.target.value);
+        setSelectedMark(mark);
+        onMarkChange(mark); // Pass the selected mark to the parent component
     };
 
     return (
         <div>
             <h2>Select a Mark</h2>
-            <input
-                type="number"
-                value={inputMark}
-                onChange={handleInputChange}
-                placeholder="Enter a mark"
-            />
+            <select value={selectedMark} onChange={handleSelectChange}>
+                {Array.from({ length: 100 }, (_, index) => (
+                    <option key={index + 1} value={index + 1}>
+                        {index + 1}
+                    </option>
+                ))}
+            </select>
         </div>
     );
 };

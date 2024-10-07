@@ -1,4 +1,5 @@
 import React from 'react';
+
 type StudentDisplayProps = {
     selectedStudent: string | null;
     selectedSubjects: { subject: string; mark: number }[];
@@ -21,8 +22,9 @@ const StudentDisplay: React.FC<StudentDisplayProps> = ({ selectedStudent, select
                    
                 </div>
             )}
-        </div>
+        </div>  
     );
 };
 
 export default StudentDisplay;
+                                 

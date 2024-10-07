@@ -1,3 +1,4 @@
+
 import React from "react";
 
 type StduentLowprops = {
@@ -20,9 +21,7 @@ const Studentlowavg: React.FC<StduentLowprops> = ({ students }) => {
 
     const minAverage = Math.min(...studentAverages.map(student => student.average));
 
-
     const lowScorer = studentAverages.find(student => student.average === minAverage);
-
 
     if (lowScorer) {
         return (
@@ -31,10 +30,6 @@ const Studentlowavg: React.FC<StduentLowprops> = ({ students }) => {
             </p>
         );
     }
-
-  
     return null;
-
-
 }
 export default Studentlowavg
