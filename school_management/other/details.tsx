@@ -1,51 +1,51 @@
 import React, { useEffect, useState } from "react";
 import "./details.css";
-import ShowStudents from "../component/showname";
-import ShowStudentId from "../component/showid";
-import StudentSelection from "../component/subject/showsubject";
+import ShowStudents from "../component/studentdetails/showname";
+import ShowStudentId from "../component/studentdetails/showid";
+import StudentSelection from "../component/studentdetails/studentselection";
 import SubjectSelection from "../component/studentdetails/selectsubject";
 import TopScorerstudent from "../component/studentdetails/topstudent";
 import LowScorerstudent from "../component/studentdetails/loweststudent";
 import HighestAverageDisplay from "../component/studentdetails/high_average_sub";
 import LowestAverageDisplay from "../component/studentdetails/low_avg_sub";
-import Dispoverall from "../component/subject/overallavg";
-import Displayoverallmark from "../component/subject/overallmark";
+import Dispoverall from "../component/studentdetails/overallavg";
+import Displayoverallmark from "../component/studentdetails/overallmark";
 import DisplayAvgAllSub from "../component/studentdetails/DisplayAvgAllSub";
 import Displaytotalallsub from "../component/studentdetails/Dispaytotalallsub";
 import Highsubjecttotal from "../component/studentdetails/highsubjectmrk";
 import Lowsubjecttotal from "../component/studentdetails/lowsubjectmark";
-import Studenthighavg from "../component/subject/StuHighAvg";
-import Studentlowavg from "../component/subject/StuLowAvg";
+import Studenthighavg from "../component/studentdetails/StuHighAvg";
+import Studentlowavg from "../component/studentdetails/StuLowAvg";
 import CountStudentsAboveMark from "../component/studentdetails/CountAbovemark";
 import CountStudentsBelowMark from "../component/studentdetails/CountBelowmark";
 import HighestPercentage from "../component/studentdetails/high_per_mark";
 import LowestPercentage from "../component/studentdetails/low_per_mark";
 import HighestSubjectPercentage from "../component/studentdetails/subject_high_per";
 import LowestSubjectPercentage from "../component/studentdetails/subject_low_per";
-import Highsubjectmark from "../component/subject/subject_highmark";
-import Lowsubjectmark from "../component/subject/subejct_lowmark";
+import Highsubjectmark from "../component/studentdetails/subject_highmark";
+import Lowsubjectmark from "../component/studentdetails/subejct_lowmark";
 import ShowEachAvg from "../component/studentdetails/showeachavg";
 import ShowEachResult from "../component/studentdetails/ShowEach";
 import AboveAvgAllSub from "../component/studentdetails/Aboveavgall";
 import BelowAvgAllSub from "../component/studentdetails/Belowavgall";
 import BelowMajority from "../component/studentdetails/BelowMajority";
 import AboveMajority from "../component/studentdetails/Abovemajority";
-import AboveSubjectavg from "../component/subject/AboveSubjectavg";
-import BelowSubjectavg from "../component/subject/BelowSubjectavg";
+import AboveSubjectavg from "../component/studentdetails/AboveSubjectallavg";
+import BelowSubjectavg from "../component/studentdetails/BelowSubjectallavg";
 import BelowClassAverage from "../component/studentdetails/showbelowavgclass";
 import ShowAboveAvgClass from "../component/studentdetails/Showaboveavgclass";
 import AboveclassMajority from "../component/studentdetails/ShowAbovClass";
 import BelowClassMajority from "../component/studentdetails/ShowBelowClass";
-import SubjectAboveMajority from "../component/subject/Subjectbelowmajority";
-import SubjectBelowMajority from "../component/subject/Subjectabovemajority";
+import SubjectAboveMajority from "../component/studentdetails/Subjectbelowmajority";
+import SubjectBelowMajority from "../component/studentdetails/Subjectabovemajority";
 import PercentageAboveAvg from "../component/studentdetails/PercentageAboveAvg";
 import PercentageBelowAvg from "../component/studentdetails/PercentageBelowAvg";
-import HighEachSubject from "../component/subject/HighEachSubject";
-import LowEachSubject from "../component/subject/LowEachsubject";
+import HighEachSubject from "../component/studentdetails/HighEachSubject";
+import LowEachSubject from "../component/studentdetails/LowEachsubject";
 import Studentaboveavg from "../component/studentdetails/Studentaboveavg";
 import Studentbelowavg from "../component/studentdetails/Studentbelowavg";
-import SubjectAboveClassAvg from "../component/subject/SubjectAboveClassAvg";
-import SubjectBelowClassAvg from "../component/subject/SubjectBelowClassAvg";
+import SubjectAboveClassAvg from "../component/studentdetails/SubjectAboveClassAvg";
+import SubjectBelowClassAvg from "../component/studentdetails/SubjectBelowClassAvg";
 import PercentageAboveEachSubject from "../component/studentdetails/PercentageAboveEachSubject";
 import PercentageBelowEachSubject from "../component/studentdetails/PercentageBelowEachSubject";
 import AboveAtleastOne from "../component/studentdetails/Aboveatleastone";
@@ -630,6 +630,7 @@ type DisplayType =
 //           <p onClick={showstulowavg}>Stduent with lowesrt average mark</p>
 //           <p onClick={showtopper}>Highest mark scorer</p>
 //           <p onClick={showlower}> Lowesr mark scorer</p>
+
 //           {classObj && (
 //             <CountStudentsAboveMark
 //               students={classObj.students}
@@ -646,6 +647,7 @@ type DisplayType =
 //           <p onClick={showlowestpercentage}>Student with lowest percentage</p>
 //           <p onClick={showsubjecthighper}>Subject with high percerntage</p>
 //           <p onClick={showsubjectlowper}>Subject with low percentage</p>
+
 //           {classObj && (
 //             <SubjectSelection
 //               subjects={Array.from(

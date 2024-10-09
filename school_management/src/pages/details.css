@@ -65,10 +65,11 @@
 
 }
 
+/* 
 .questionsec p:hover {
     transform: scale(0.99);
     background-color: #ceced4;
-}
+} */
 
 
 .questionsec p:active {
@@ -135,9 +136,6 @@ h2 {
     cursor: pointer;
 }
 
-.sections:active {
-    border: 1px solid black;
-}
 
 .answer {
     background-color: #e5e6e0;

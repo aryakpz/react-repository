@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from "react";
 import "../pages/details.css";
 
-import StudentDisplay from "../component/subject/display";
+import StudentDisplay from "../src/component/studentdetails/display";
 
-import StudentmarkDisplay from "../component/subject/displaymark";
-import Studentaverage from "../component/subject/avgmark";
-import Studenttotal from "../component/subject/totalmark";
+import StudentmarkDisplay from "../src/component/studentdetails/displaymark";
+import Studentaverage from "../src/component/studentdetails/avgmark";
+import Studenttotal from "../src/component/studentdetails/totalmark";
 
-import TopScorerDisplay from "./studentdetails/topscore";
-import LowScorerDisplay from "./studentdetails/lowscore";
-import Toppercentagestudent from "./studentdetails/toppercentage";
-import Lowpercentagestudent from "./studentdetails/lowpercentage";
-import StudentPercentageHigh from "../component/subject/StudentSubjecthigh";
-import SubAverageMarks from "../component/subject/Subjectavgmark";
-import PercentageAboveSpecificInMajority from "./studentdetails/AboveMajoritySubject";
-import PercentageBelowSpecificInMajority from "./studentdetails/BelowMajoritySubejct";
-import StudentPercentageLow from "../component/subject/StudentSubejctlow";
-import Specificstudentpercentage from "./studentdetails/specificstudentpercentage";
-import Specificstudentpercentagebelow from "./studentdetails/Specificstudentpercentagebelow";
-import AvgAboveAtLeastOne from "./studentdetails/AvgAboveAtleastone";
-import AvgBelowAtleastOne from "./studentdetails/Avgbelowatleastone";
-import StudentsAboveAverage from "./studentdetails/AbovespecificStudent";
-import StudentsBelowAverage from "./studentdetails/BelowspecificStudent";
+import TopScorerDisplay from "../src/component/studentdetails/topscore";
+import LowScorerDisplay from "../src/component/studentdetails/lowscore";
+import Toppercentagestudent from "../src/component/studentdetails/toppercentage";
+import Lowpercentagestudent from "../src/component/studentdetails/lowpercentage";
+import StudentPercentageHigh from "../src/component/studentdetails/StudentSubjecthigh";
+import SubAverageMarks from "../src/component/studentdetails/Subjectavgmark";
+import PercentageAboveSpecificInMajority from "../src/component/studentdetails/AboveMajoritySubject";
+import PercentageBelowSpecificInMajority from "../src/component/studentdetails/BelowMajoritySubejct";
+import StudentPercentageLow from "../src/component/studentdetails/StudentSubejctlow";
+import Specificstudentpercentage from "../src/component/studentdetails/specificstudentpercentage";
+import Specificstudentpercentagebelow from "../src/component/studentdetails/Specificstudentpercentagebelow";
+import AvgAboveAtLeastOne from "../src/component/studentdetails/AvgAboveAtleastone";
+import AvgBelowAtleastOne from "../src/component/studentdetails/Avgbelowatleastone";
+import StudentsAboveAverage from "../src/component/studentdetails/AbovespecificStudent";
+import StudentsBelowAverage from "../src/component/studentdetails/BelowspecificStudent";
 
-import SubjectsAboveAverage from "./studentdetails/AboveSubjectavg";
-import SubjectsBelowAverage from "./studentdetails/Belowsubjectavg";
-import HighestPercentageSubjects from "./studentdetails/HighAvgStudent";
-import LowestPercentageSubjects from "./studentdetails/LeastAvgStudent";
-import LowestPercentageAboveAverage from "./studentdetails/AboveLowScore";
-import LowestPercentageBelowAverage from "./studentdetails/BelowLowScore";
+import SubjectsAboveAverage from "../src/component/studentdetails/AboveSubjectavg";
+import SubjectsBelowAverage from "../src/component/studentdetails/Belowsubjectavg";
+import HighestPercentageSubjects from "../src/component/studentdetails/HighAvgStudent";
+import LowestPercentageSubjects from "../src/component/studentdetails/LeastAvgStudent";
+import LowestPercentageAboveAverage from "../src/component/studentdetails/AboveLowScore";
+import LowestPercentageBelowAverage from "../src/component/studentdetails/BelowLowScore";
 
 type AnswerSectionProps = {
   displayType: string | null;

@@ -38,12 +38,3 @@ const TopScorerDisplay: React.FC<TopScorerDisplayProps> = ({
 };
 
 export default TopScorerDisplay;
-
-
-
-
-
-
-
-
-

@@ -1,49 +1,44 @@
 import React from "react";
 
-
-type Lowtotalprops={
-    students:{
-        name:string;
-        marks:{
-            subject:string;
-            mark:number
-        }[];
+type Lowtotalprops = {
+  students: {
+    name: string;
+    marks: {
+      subject: string;
+      mark: number;
     }[];
-}
+  }[];
+};
 
-const Lowsubjecttotal:React.FC<Lowtotalprops> =({students})=>{
+const Lowsubjecttotal: React.FC<Lowtotalprops> = ({ students }) => {
+  const subjecttotal: { [key: string]: number } = {};
 
+  students.forEach((student) => {
+    student.marks.forEach((mark) => {
+      const subject = mark.subject;
 
-        const subjecttotal: { [key: string]: number } = {};
+      if (!subjecttotal[subject]) {
+        subjecttotal[subject] = 0;
+      }
+      subjecttotal[subject] += mark.mark;
+    });
+  });
 
-        students.forEach(student => {
-            student.marks.forEach(mark => {
-                const subject = mark.subject;
+  let lowestSubject: string = "";
+  let lowestTotal: number = Infinity;
 
-                if (!subjecttotal[subject]) {
-                    subjecttotal[subject] = 0;
-                }
-                subjecttotal[subject] += mark.mark;
-            });
-        });
+  for (const subject in subjecttotal) {
+    if (subjecttotal[subject] < lowestTotal) {
+      lowestTotal = subjecttotal[subject];
+      lowestSubject = subject;
+    }
+  }
 
-        let lowestSubject: string = '';
-        let lowestTotal: number = Infinity;
+  return (
+    <p>
+      <span>Lowest Mark:</span> {lowestSubject}: {lowestTotal}
+    </p>
+  );
+};
 
-        for (const subject in subjecttotal) {
-             
-            if (subjecttotal[subject] < lowestTotal) {
-                lowestTotal = subjecttotal[subject];
-                lowestSubject = subject;
-            }
-        }
-
-   
-            return(
-                <p>
-                    <span>Lowest Mark:</span> {lowestSubject}: {lowestTotal}
-                </p>
-            );
-        }
-
-        export default Lowsubjecttotal
+export default Lowsubjecttotal;
