@@ -86,17 +86,17 @@ import PercentageBelowAverageInSubject from "../component/student/PercentageBelo
 import MarkSelection from "../component/cutoff/markselection";
 import AnswerSection from "../component/AnswerSection";
 
-
+type Mark = {
+    subject: string;
+    mark: number;
+}
 type ClassData = {
     name: string;
     teacherName: string;
     students: {
         name: string;
         id: number;
-        marks: {
-            subject: string;
-            mark: number;
-        }[];
+        marks: Mark[];
     }[];
 };
 
@@ -197,7 +197,7 @@ export const Details: React.FC = () => {
     const handlemarkchange = (mark: number, type: 'mark') => {
         setmark(mark)
     };
-    
+
     const showtopper = () => {
         clearDisplay();
         if (classObj) {

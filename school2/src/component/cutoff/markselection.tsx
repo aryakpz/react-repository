@@ -5,12 +5,12 @@ interface MarkSelectionProps {
 }
 
 const MarkSelection: React.FC<MarkSelectionProps> = ({ onMarkChange }) => {
-    const [selectedMark, setSelectedMark] = useState<number>(1); // Default selection
+    const [selectedMark, setSelectedMark] = useState<number>(1); 
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const mark = parseInt(e.target.value);
         setSelectedMark(mark);
-        onMarkChange(mark); // Pass the selected mark to the parent component
+        onMarkChange(mark);
     };
 
     return (
