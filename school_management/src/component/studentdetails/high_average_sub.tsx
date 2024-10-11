@@ -1,6 +1,6 @@
 import React from "react";
 
-type HighestAverageDisplayProps = {
+type AverageDisplayProps = {
   students: {
     name: string;
     marks: {
@@ -8,10 +8,12 @@ type HighestAverageDisplayProps = {
       mark: number;
     }[];
   }[];
+  displayType: "highest" | "lowest";
 };
 
-const HighestAverageDisplay: React.FC<HighestAverageDisplayProps> = ({
+const HighestAverageStudent: React.FC<AverageDisplayProps> = ({
   students,
+  displayType,
 }) => {
   const subjectTotals: {
     [key: string]: { totalMarks: number; count: number };
@@ -27,24 +29,29 @@ const HighestAverageDisplay: React.FC<HighestAverageDisplayProps> = ({
     });
   });
 
-  let highestAvgSubject = "";
-  let highestAvg = 0;
+  let avgSubject = "";
+  let avgValue = displayType === "highest" ? 0 : Infinity;
 
   for (const subject in subjectTotals) {
     const avg =
       subjectTotals[subject].totalMarks / subjectTotals[subject].count;
-    if (avg > highestAvg) {
-      highestAvg = avg;
-      highestAvgSubject = subject;
+    if (
+      (displayType === "highest" && avg > avgValue) ||
+      (displayType === "lowest" && avg < avgValue)
+    ) {
+      avgValue = avg;
+      avgSubject = subject;
     }
   }
 
   return (
     <p>
-      <span>Highest Average:</span> {highestAvgSubject} (Average:{" "}
-      {highestAvg.toFixed(2)})
+      <span>
+        {displayType === "highest" ? "Highest Average:" : "Lowest Average:"}
+      </span>{" "}
+      {avgSubject} (Average: {avgValue.toFixed(2)})
     </p>
   );
 };
 
-export default HighestAverageDisplay;
+export default HighestAverageStudent;

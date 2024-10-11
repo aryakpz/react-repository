@@ -9,8 +9,16 @@ type Student = {
   }[];
 };
 
-const PercentageAboveEachSubject: React.FC<{ students: Student[] }> = ({
+type PercentageCheckType = "above" | "below";
+
+interface PercentageProps {
+  students: Student[];
+  displayType: PercentageCheckType;
+}
+
+const AboveAndBelowSubjectAveragemark: React.FC<PercentageProps> = ({
   students,
+  displayType,
 }) => {
   const [subjectPercentages, setSubjectPercentages] = useState<{
     [subject: string]: number;
@@ -18,11 +26,11 @@ const PercentageAboveEachSubject: React.FC<{ students: Student[] }> = ({
 
   useEffect(() => {
     if (students.length > 0) {
-      calculatePercentageAboveAverage();
+      calculatePercentage();
     }
   }, [students]);
 
-  const calculatePercentageAboveAverage = () => {
+  const calculatePercentage = () => {
     const subjectMarks: {
       [subject: string]: { totalMarks: number; count: number };
     } = {};
@@ -46,26 +54,41 @@ const PercentageAboveEachSubject: React.FC<{ students: Student[] }> = ({
 
     const percentages: { [subject: string]: number } = {};
     Object.keys(subjectAverages).forEach((subject) => {
-      let aboveAverageCount = 0;
+      let count = 0;
 
       students.forEach((student) => {
         const studentMark = student.marks.find(
           (mark) => mark.subject === subject
         )?.mark;
-        if (studentMark && studentMark > subjectAverages[subject]) {
-          aboveAverageCount++;
+
+        if (
+          displayType === "above" &&
+          studentMark &&
+          studentMark > subjectAverages[subject]
+        ) {
+          count++;
+        } else if (
+          displayType === "below" &&
+          studentMark &&
+          studentMark < subjectAverages[subject]
+        ) {
+          count++;
         }
       });
 
-      percentages[subject] = (aboveAverageCount / studentCount) * 100;
+      percentages[subject] = (count / studentCount) * 100;
     });
 
     setSubjectPercentages(percentages);
   };
 
   return (
-    <p>
-      <span>Percentage of Students </span>
+    <div>
+      <h4>
+        Percentage of Students Scoring{" "}
+        {displayType === "above" ? "Above" : "Below"} Class Average in Each
+        Subject
+      </h4>
       {Object.keys(subjectPercentages).length > 0 ? (
         <ul>
           {Object.entries(subjectPercentages).map(([subject, percentage]) => (
@@ -77,8 +100,8 @@ const PercentageAboveEachSubject: React.FC<{ students: Student[] }> = ({
       ) : (
         <p>No data available.</p>
       )}
-    </p>
+    </div>
   );
 };
 
-export default PercentageAboveEachSubject;
+export default AboveAndBelowSubjectAveragemark;

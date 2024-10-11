@@ -1,16 +1,22 @@
 import React from "react";
 
-type StudentAvgprops = {
-  students: {
-    name: string;
-    marks: {
-      subject: string;
-      mark: number;
-    }[];
+type Student = {
+  name: string;
+  marks: {
+    subject: string;
+    mark: number;
   }[];
 };
 
-const Studenthighavg: React.FC<StudentAvgprops> = ({ students }) => {
+type StudentAvgProps = {
+  students: Student[];
+  displayType: "highest" | "lowest";
+};
+
+const StudentAveragescore: React.FC<StudentAvgProps> = ({
+  students,
+  displayType,
+}) => {
   const studentAverages: { name: string; average: number }[] = students.map(
     (student) => {
       const totalMarks = student.marks.reduce(
@@ -22,19 +28,31 @@ const Studenthighavg: React.FC<StudentAvgprops> = ({ students }) => {
     }
   );
 
-  const maxAverage = Math.max(
-    ...studentAverages.map((student) => student.average)
-  );
+  let resultStudent: { name: string; average: number } | undefined;
 
-  const topScorer = studentAverages.find(
-    (student) => student.average === maxAverage
-  );
+  if (displayType === "highest") {
+    const maxAverage = Math.max(
+      ...studentAverages.map((student) => student.average)
+    );
+    resultStudent = studentAverages.find(
+      (student) => student.average === maxAverage
+    );
+  } else if (displayType === "lowest") {
+    const minAverage = Math.min(
+      ...studentAverages.map((student) => student.average)
+    );
+    resultStudent = studentAverages.find(
+      (student) => student.average === minAverage
+    );
+  }
 
-  if (topScorer) {
+  if (resultStudent) {
     return (
       <p>
-        <span> Highest Average:</span> {topScorer.name} -{" "}
-        {topScorer.average.toFixed(2)}
+        <span>
+          {displayType === "highest" ? "Highest Average:" : "Lowest Average:"}
+        </span>
+        {resultStudent.name} - {resultStudent.average.toFixed(2)}
       </p>
     );
   }
@@ -42,4 +60,4 @@ const Studenthighavg: React.FC<StudentAvgprops> = ({ students }) => {
   return null;
 };
 
-export default Studenthighavg;
+export default StudentAveragescore;

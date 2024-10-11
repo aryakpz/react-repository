@@ -13,16 +13,20 @@ type ClassData = {
   students: Student[];
 };
 
-const AboveSubjectavg: React.FC<{ students: Student[] }> = ({ students }) => {
-  const [majorityAboveSubjects, setMajorityAboveSubjects] = useState<string[]>(
-    []
-  );
+type CheckType = "above" | "below";
+
+const SubjectAverageChecker: React.FC<{
+  students: Student[];
+  checkType: CheckType;
+}> = ({ students, checkType }) => {
+  const [majoritySubjects, setMajoritySubjects] = useState<string[]>([]);
 
   useEffect(() => {
     const calculateSubjectAverages = () => {
       const totals: { [subject: string]: number } = {};
       const counts: { [subject: string]: number } = {};
 
+      // Step 1: Calculate total marks and count for each subject
       students.forEach((student) =>
         student.marks.forEach((mark) => {
           totals[mark.subject] = (totals[mark.subject] || 0) + mark.mark;
@@ -30,41 +34,47 @@ const AboveSubjectavg: React.FC<{ students: Student[] }> = ({ students }) => {
         })
       );
 
-      const subjectsAboveAvg: { [subject: string]: number } = {};
+      const subjectsByComparison: { [subject: string]: number } = {};
+
+      // Step 2: Calculate if students are above/below average based on checkType
       students.forEach((student) =>
         student.marks.forEach((mark) => {
           const avg = totals[mark.subject] / counts[mark.subject];
-          if (mark.mark > avg) {
-            subjectsAboveAvg[mark.subject] =
-              (subjectsAboveAvg[mark.subject] || 0) + 1;
+          if (
+            (checkType === "above" && mark.mark > avg) ||
+            (checkType === "below" && mark.mark < avg)
+          ) {
+            subjectsByComparison[mark.subject] =
+              (subjectsByComparison[mark.subject] || 0) + 1;
           }
         })
       );
 
-      const majoritySubjects = Object.keys(subjectsAboveAvg).filter(
-        (subject) => subjectsAboveAvg[subject] > students.length / 2
+      // Step 3: Filter subjects where the majority scored above/below average
+      const majoritySubjects = Object.keys(subjectsByComparison).filter(
+        (subject) => subjectsByComparison[subject] > students.length / 2
       );
 
-      setMajorityAboveSubjects(majoritySubjects);
+      setMajoritySubjects(majoritySubjects);
     };
 
     calculateSubjectAverages();
-  }, [students]);
+  }, [students, checkType]);
 
   return (
     <p>
-      <span>Above Average:</span>
-      {majorityAboveSubjects.length > 0 ? (
+      <span>{checkType === "above" ? "Above Average:" : "Below Average:"}</span>
+      {majoritySubjects.length > 0 ? (
         <ul>
-          {majorityAboveSubjects.map((subject) => (
+          {majoritySubjects.map((subject) => (
             <li key={subject}>{subject}</li>
           ))}
         </ul>
       ) : (
-        <p>No subjects found where the majority scored above average.</p>
+        <p>No subjects found where the majority scored {checkType} average.</p>
       )}
     </p>
   );
 };
 
-export default AboveSubjectavg;
+export default SubjectAverageChecker;

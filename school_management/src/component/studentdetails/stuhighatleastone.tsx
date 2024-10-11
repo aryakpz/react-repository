@@ -1,69 +1,77 @@
 import React, { useEffect, useState } from "react";
 
+type Mark = {
+  subject: string;
+  mark: number;
+};
+
 type Student = {
   name: string;
   id: number;
-  marks: {
-    subject: string;
-    mark: number;
-  }[];
+  marks: Mark[];
 };
 
-type HighestScorersProps = {
+type ScorerType = "highest" | "lowest";
+
+type ScorersProps = {
   students: Student[];
+  displayType: ScorerType;
 };
 
-const StuHighAtleastOne: React.FC<HighestScorersProps> = ({ students }) => {
-  const [highestScorers, setHighestScorers] = useState<string[]>([]);
+const StduentMarkAtleastOne: React.FC<ScorersProps> = ({
+  students,
+  displayType,
+}) => {
+  const [scorers, setScorers] = useState<string[]>([]);
 
   useEffect(() => {
     if (students.length > 0) {
-      findHighestScorers();
+      findScorers();
     }
   }, [students]);
 
-  const findHighestScorers = () => {
-    const subjectHighestScores: {
+  const findScorers = () => {
+    const subjectScores: {
       [subject: string]: { score: number; students: string[] };
     } = {};
 
-    // Step 1: Iterate through students to find the highest score for each subject
     students.forEach((student) => {
       student.marks.forEach((mark) => {
         const subject = mark.subject;
         const score = mark.mark;
 
-        // Check if this is the highest score for the subject
-        if (
-          !subjectHighestScores[subject] ||
-          score > subjectHighestScores[subject].score
-        ) {
-          subjectHighestScores[subject] = {
-            score: score,
-            students: [student.name],
-          };
-        } else if (score === subjectHighestScores[subject].score) {
-          subjectHighestScores[subject].students.push(student.name);
+        if (!subjectScores[subject]) {
+          subjectScores[subject] = { score: score, students: [student.name] };
+        } else {
+          if (
+            (displayType === "highest" &&
+              score > subjectScores[subject].score) ||
+            (displayType === "lowest" && score < subjectScores[subject].score)
+          ) {
+            subjectScores[subject] = { score: score, students: [student.name] };
+          } else if (score === subjectScores[subject].score) {
+            subjectScores[subject].students.push(student.name);
+          }
         }
       });
     });
 
-    // Step 2: Collect all students who are highest scorers in any subject
-    const allHighestScorers = new Set<string>();
-    Object.values(subjectHighestScores).forEach(({ students }) => {
-      students.forEach((student) => allHighestScorers.add(student));
+    const allScorers = new Set<string>();
+    Object.values(subjectScores).forEach(({ students }) => {
+      students.forEach((student) => allScorers.add(student));
     });
 
-    // Update the state with the highest scorers
-    setHighestScorers(Array.from(allHighestScorers));
+    setScorers(Array.from(allScorers));
   };
 
   return (
     <div>
-      <h3>Highest Scorers:</h3>
-      {highestScorers.length > 0 ? (
+      <h3>
+        {displayType === "highest" ? "Highest Scorers:" : "Lowest Scorers:"}
+      </h3>
+      {scorers.length > 0 ? (
         <ul>
-          {highestScorers.map((student) => (
+          {scorers.map((student) => (
             <li key={student}>{student}</li>
           ))}
         </ul>
@@ -74,4 +82,4 @@ const StuHighAtleastOne: React.FC<HighestScorersProps> = ({ students }) => {
   );
 };
 
-export default StuHighAtleastOne;
+export default StduentMarkAtleastOne;

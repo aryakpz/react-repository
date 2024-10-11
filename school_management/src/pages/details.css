@@ -1,5 +1,4 @@
 .classsec {
-    /* background-image: url('/src/asset/pensil.jpg'); */
     height: 92.5vh;
     width: 100%;
     background-position: center;
@@ -16,15 +15,11 @@
 .datasec {
     display: flex;
     flex-flow: row;
-    /* justify-content: space-between; */
     max-width: 80vw;
     margin: 0 auto;
     height: 80vh;
     color: black;
     padding: 30px;
-    /* background-color: #e7e7e9; */
-    /* background-color: antiquewhite; */
-    /* box-shadow: 0 3px 5px; */
     align-items: center;
     justify-content: center;
     font-size: 18px;
@@ -134,12 +129,45 @@ h2 {
     padding: 1px 30px;
     margin-bottom: 10px;
     cursor: pointer;
+
 }
 
 
 .answer {
     background-color: #e5e6e0;
     font-style: italic;
-    padding: 1px 44px;
+    padding: 10px 44px;
     margin-bottom: 5px;
+}
+
+.answer select {
+    margin-bottom: 10px;
+}
+
+.arrow {
+    /* display: inline-block; */
+    /* margin-right: 10px; */
+    transition: transform 0.1s ease;
+    width: 10px;
+    height: 0px;
+    background-color: #b3b4a9;
+    position: absolute;
+
+}
+
+.rotate {
+    transform: rotate(90deg);
+    top: 6px;
+    /* transform-origin: center; */
+}
+
+.question {
+    display: flex;
+    flex-flow: row;
+    /* gap: 50px; */
+    position: relative;
+}
+
+.ques {
+    /* margleft: 10px; */
 }

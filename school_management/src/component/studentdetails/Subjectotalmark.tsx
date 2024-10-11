@@ -10,14 +10,16 @@ type Student = {
   marks: Mark[];
 };
 
-type SubAverageMarksProps = {
+type CombinedMarksProps = {
   students: Student[];
   subject: string;
+  displayType: "total" | "average";
 };
 
-const SubTotalMarks: React.FC<SubAverageMarksProps> = ({
+const SubjectTotalmarkofstduent: React.FC<CombinedMarksProps> = ({
   students,
   subject,
+  displayType,
 }) => {
   let totalMarks = 0;
   let studentCount = 0;
@@ -30,13 +32,21 @@ const SubTotalMarks: React.FC<SubAverageMarksProps> = ({
     }
   });
 
+  const averageMarks = studentCount > 0 ? totalMarks / studentCount : 0;
+
   return (
     <div>
-      <p>
-        <span>Total marks of {subject}:</span> {totalMarks}
-      </p>
+      {displayType === "total" ? (
+        <p>
+          <span>Total marks of {subject}:</span> {totalMarks}
+        </p>
+      ) : (
+        <p>
+          <span>Average marks of {subject}:</span> {averageMarks.toFixed(2)}
+        </p>
+      )}
     </div>
   );
 };
 
-export default SubTotalMarks;
+export default SubjectTotalmarkofstduent;

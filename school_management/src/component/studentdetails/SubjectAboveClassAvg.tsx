@@ -9,23 +9,28 @@ type Student = {
   }[];
 };
 
-const SubjectAboveClassAvg: React.FC<{ students: Student[] }> = ({
+type SubjectAverageProps = {
+  students: Student[];
+  displayType: "above" | "below";
+};
+
+const SubjectAboveAndBelowClassAvgMark: React.FC<SubjectAverageProps> = ({
   students,
+  displayType,
 }) => {
-  const [subjectsAboveAverage, setSubjectsAboveAverage] = useState<string[]>(
-    []
-  );
+  const [subjects, setSubjects] = useState<string[]>([]);
 
   useEffect(() => {
-    findSubjectsAboveClassAverage();
+    findSubjectsBasedOnClassAverage();
   }, [students]);
 
-  const findSubjectsAboveClassAverage = () => {
+  const findSubjectsBasedOnClassAverage = () => {
     if (students.length === 0) return;
 
     let totalClassMarks = 0;
     let totalMarksCount = 0;
 
+    // Calculate total class marks and count
     students.forEach((student) => {
       student.marks.forEach((mark) => {
         totalClassMarks += mark.mark;
@@ -39,6 +44,7 @@ const SubjectAboveClassAvg: React.FC<{ students: Student[] }> = ({
       [subject: string]: { totalMarks: number; count: number };
     } = {};
 
+    // Aggregate marks per subject
     students.forEach((student) => {
       student.marks.forEach((mark) => {
         if (!subjectMarks[mark.subject]) {
@@ -49,29 +55,36 @@ const SubjectAboveClassAvg: React.FC<{ students: Student[] }> = ({
       });
     });
 
-    const subjectsAboveAverage = Object.keys(subjectMarks).filter((subject) => {
+    // Filter subjects based on checkType
+    const filteredSubjects = Object.keys(subjectMarks).filter((subject) => {
       const subjectAverage =
         subjectMarks[subject].totalMarks / subjectMarks[subject].count;
-      return subjectAverage > classAverageMarks;
+      return displayType === "above"
+        ? subjectAverage > classAverageMarks
+        : subjectAverage < classAverageMarks;
     });
 
-    setSubjectsAboveAverage(subjectsAboveAverage);
+    setSubjects(filteredSubjects);
   };
 
   return (
-    <p>
-      <span>Subjects Above Average </span>
-      {subjectsAboveAverage.length > 0 ? (
+    <div>
+      <span>
+        {displayType === "above"
+          ? "Subjects Above Average"
+          : "Subjects Below Average"}
+      </span>
+      {subjects.length > 0 ? (
         <ul>
-          {subjectsAboveAverage.map((subject) => (
+          {subjects.map((subject) => (
             <li key={subject}>{subject}</li>
           ))}
         </ul>
       ) : (
-        <p>No subjects .</p>
+        <p>No subjects.</p>
       )}
-    </p>
+    </div>
   );
 };
 
-export default SubjectAboveClassAvg;
+export default SubjectAboveAndBelowClassAvgMark;

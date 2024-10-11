@@ -1,8 +1,6 @@
-// TopScorerDisplay.tsx
-
 import React from "react";
 
-type TopScorerDisplayProps = {
+interface ScorerDisplayProps {
   students: {
     name: string;
     marks: {
@@ -11,30 +9,48 @@ type TopScorerDisplayProps = {
     }[];
   }[];
   subject: string;
-};
+  displayType: "top" | "low";
+}
 
-const TopScorerDisplay: React.FC<TopScorerDisplayProps> = ({
+const TopscorerInSubject: React.FC<ScorerDisplayProps> = ({
   students,
   subject,
+  displayType,
 }) => {
-  const highestScorer = students.reduce(
-    (max, student) => {
-      const marks = student.marks.find((mark) => mark.subject === subject);
-      return marks && marks.mark > (max.mark || 0)
-        ? { name: student.name, mark: marks.mark }
-        : max;
-    },
-    { name: "", mark: 0 }
-  );
+  const initialScorer = {
+    name: "",
+    mark: displayType === "low" ? Infinity : 0,
+  };
 
-  if (!highestScorer.name) return null;
+  const scorer = students.reduce((currentScorer, student) => {
+    const markEntry = student.marks.find((mark) => mark.subject === subject);
+
+    if (markEntry) {
+      if (displayType === "top") {
+        return markEntry.mark > currentScorer.mark
+          ? { name: student.name, mark: markEntry.mark }
+          : currentScorer;
+      } else {
+        return markEntry.mark < currentScorer.mark
+          ? { name: student.name, mark: markEntry.mark }
+          : currentScorer;
+      }
+    }
+    return currentScorer;
+  }, initialScorer);
+
+  if (!scorer.name) return <p>No scorer found.</p>;
 
   return (
     <p>
-      <span>Highest score in {subject}:</span> {highestScorer.name} -{" "}
-      {highestScorer.mark}
+      <span>
+        {displayType === "top"
+          ? `Highest score in ${subject}:`
+          : `Lowest score in ${subject}:`}
+      </span>{" "}
+      {scorer.name} - {scorer.mark}
     </p>
   );
 };
 
-export default TopScorerDisplay;
+export default TopscorerInSubject;

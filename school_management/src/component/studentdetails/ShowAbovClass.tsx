@@ -9,18 +9,19 @@ type Student = {
   }[];
 };
 
-const AboveclassMajority: React.FC<{ students: Student[] }> = ({
-  students,
-}) => {
-  const [belowAverageStudents, setBelowAverageStudents] = useState<Student[]>(
-    []
-  );
+type displayType = "above" | "below";
+
+const AverageMarkInMajoritySubject: React.FC<{
+  students: Student[];
+  displayType: displayType;
+}> = ({ students, displayType }) => {
+  const [majorityStudents, setMajorityStudents] = useState<Student[]>([]);
 
   useEffect(() => {
-    findBelowAverageStudents();
+    findMajorityStudents();
   }, [students]);
 
-  const findBelowAverageStudents = () => {
+  const findMajorityStudents = () => {
     const subjectTotals: {
       [subject: string]: { total: number; count: number };
     } = {};
@@ -34,7 +35,6 @@ const AboveclassMajority: React.FC<{ students: Student[] }> = ({
         subjectTotals[subject].count += 1;
       });
     });
-
     const subjectAverages: { [subject: string]: number } = {};
     Object.keys(subjectTotals).forEach((subject) => {
       subjectAverages[subject] =
@@ -42,30 +42,39 @@ const AboveclassMajority: React.FC<{ students: Student[] }> = ({
     });
 
     const majorityCount = Math.ceil(Object.keys(subjectAverages).length / 2);
-    const studentsBelowAverage = students.filter((student) => {
-      const belowAverageSubjectCount = student.marks.filter(
+    const filteredStudents = students.filter((student) => {
+      const belowAverageCount = student.marks.filter(
         ({ subject, mark }) => mark < subjectAverages[subject]
       ).length;
-      return belowAverageSubjectCount >= majorityCount;
+
+      if (displayType === "above") {
+        return belowAverageCount < majorityCount;
+      } else {
+        return belowAverageCount >= majorityCount;
+      }
     });
 
-    setBelowAverageStudents(studentsBelowAverage);
+    setMajorityStudents(filteredStudents);
   };
 
   return (
-    <p>
-      <span>Above majority</span>
+    <div>
+      <p>
+        <span>
+          {displayType === "above" ? "Above Majority" : "Below Majority"}
+        </span>
+      </p>
       <ul>
-        {belowAverageStudents.length > 0 ? (
-          belowAverageStudents.map((student) => (
+        {majorityStudents.length > 0 ? (
+          majorityStudents.map((student) => (
             <li key={student.id}>{student.name}</li>
           ))
         ) : (
-          <li>No students </li>
+          <li>No students.</li>
         )}
       </ul>
-    </p>
+    </div>
   );
 };
 
-export default AboveclassMajority;
+export default AverageMarkInMajoritySubject;

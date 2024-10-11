@@ -9,26 +9,28 @@ type Student = {
   }[];
 };
 
-type AboveAveragePercentageProps = {
+type PercentageProps = {
   students: Student[];
   selectedStudent: string;
+  displayType: "above" | "below";
 };
 
-const Specificstudentpercentage: React.FC<AboveAveragePercentageProps> = ({
+const PercentageAboveAndBelowAvgMarkInSubejct: React.FC<PercentageProps> = ({
   students,
   selectedStudent,
+  displayType,
 }) => {
-  const [aboveAveragePercentages, setAboveAveragePercentages] = useState<
+  const [percentages, setPercentages] = useState<
     { subject: string; percentage: number }[]
   >([]);
 
   useEffect(() => {
     if (students.length > 0 && selectedStudent) {
-      calculateAboveAveragePercentages();
+      calculatePercentages();
     }
-  }, [students, selectedStudent]);
+  }, [students, selectedStudent, displayType]);
 
-  const calculateAboveAveragePercentages = () => {
+  const calculatePercentages = () => {
     const specificStudent = students.find(
       (student) => student.name === selectedStudent
     );
@@ -38,7 +40,6 @@ const Specificstudentpercentage: React.FC<AboveAveragePercentageProps> = ({
       [subject: string]: { total: number; count: number };
     } = {};
 
-    // Step 1: Calculate total marks and counts for each subject
     students.forEach((student) => {
       student.marks.forEach((mark) => {
         if (!subjectTotals[mark.subject]) {
@@ -49,40 +50,44 @@ const Specificstudentpercentage: React.FC<AboveAveragePercentageProps> = ({
       });
     });
 
-    // Step 2: Calculate average marks for the specific student
     const averages: { [subject: string]: number } = {};
     specificStudent.marks.forEach((mark) => {
       if (subjectTotals[mark.subject]) {
-        averages[mark.subject] = mark.mark; // average for the specific student
+        averages[mark.subject] = mark.mark;
       }
     });
-
-    // Step 3: Calculate the percentage of students scoring above the average marks
-    const percentages: { subject: string; percentage: number }[] = [];
+    const calculatedPercentages: { subject: string; percentage: number }[] = [];
 
     for (const subject in averages) {
-      const averageMark = averages[subject];
-      let studentsAboveCount = 0;
+      const studentMark = averages[subject];
+      let studentCount = 0;
 
       students.forEach((student) => {
-        const studentMark = student.marks.find((m) => m.subject === subject);
-        if (studentMark && studentMark.mark > averageMark) {
-          studentsAboveCount++;
+        const mark = student.marks.find((m) => m.subject === subject);
+        if (
+          (displayType === "above" && mark && mark.mark > studentMark) ||
+          (displayType === "below" && mark && mark.mark < studentMark)
+        ) {
+          studentCount++;
         }
       });
 
-      const percentage = (studentsAboveCount / students.length) * 100;
-      percentages.push({ subject, percentage });
+      const percentage = (studentCount / students.length) * 100;
+      calculatedPercentages.push({ subject, percentage });
     }
 
-    setAboveAveragePercentages(percentages);
+    setPercentages(calculatedPercentages);
   };
 
   return (
     <p>
-      <span>Percentage of {selectedStudent}</span>
+      <span>
+        {displayType === "above"
+          ? `Percentage of students scoring above ${selectedStudent}`
+          : `Percentage of students scoring below ${selectedStudent}`}
+      </span>
       <ul>
-        {aboveAveragePercentages.map(({ subject, percentage }) => (
+        {percentages.map(({ subject, percentage }) => (
           <li key={subject}>
             {subject}: {percentage.toFixed(2)}%
           </li>
@@ -92,4 +97,4 @@ const Specificstudentpercentage: React.FC<AboveAveragePercentageProps> = ({
   );
 };
 
-export default Specificstudentpercentage;
+export default PercentageAboveAndBelowAvgMarkInSubejct;

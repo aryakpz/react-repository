@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 
-interface MarkSelectionProps {
-  onMarkChange: (mark: number) => void;
-}
+type MarkSelectionProps = {
+  onSelectmark: (mark: number) => void;
+};
 
-const MarkSelection: React.FC<MarkSelectionProps> = ({ onMarkChange }) => {
+const MarkSelection: React.FC<MarkSelectionProps> = ({ onSelectmark }) => {
   const [selectedMark, setSelectedMark] = useState<number>(1);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const mark = parseInt(e.target.value);
     setSelectedMark(mark);
-    onMarkChange(mark);
+    onSelectmark(mark);
   };
 
   return (
     <div>
-      <h2>Select a Mark</h2>
+      <h4>Select a certain Mark</h4>
       <select value={selectedMark} onChange={handleSelectChange}>
         {Array.from({ length: 100 }, (_, index) => (
           <option key={index + 1} value={index + 1}>

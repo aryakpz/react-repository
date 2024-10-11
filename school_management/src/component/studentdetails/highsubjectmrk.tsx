@@ -1,45 +1,56 @@
 import React from "react";
 
-type Highscoreprops = {
-  students: {
-    name: string;
-    marks: {
-      subject: string;
-      mark: number;
-    }[];
+type Student = {
+  name: string;
+  marks: {
+    subject: string;
+    mark: number;
   }[];
 };
 
-const Highsubjecttotal: React.FC<Highscoreprops> = ({ students }) => {
+type CombinedSubjectTotalProps = {
+  students: Student[];
+  displayType: "highest" | "lowest";
+};
+
+const SubejctMarksDisplay: React.FC<CombinedSubjectTotalProps> = ({
+  students,
+  displayType,
+}) => {
   const subjectTotals: { [key: string]: number } = {};
 
   students.forEach((student) => {
     student.marks.forEach((mark) => {
       const subject = mark.subject;
-
       if (!subjectTotals[subject]) {
         subjectTotals[subject] = 0;
       }
-
       subjectTotals[subject] += mark.mark;
     });
   });
 
-  let highestSubject: string = "";
-  let highestTotal: number = 0;
+  let resultSubject: string = "";
+  let resultTotal: number = displayType === "highest" ? 0 : Infinity;
 
   for (const subject in subjectTotals) {
-    if (subjectTotals[subject] > highestTotal) {
-      highestTotal = subjectTotals[subject];
-      highestSubject = subject;
+    const total = subjectTotals[subject];
+    if (
+      (displayType === "highest" && total > resultTotal) ||
+      (displayType === "lowest" && total < resultTotal)
+    ) {
+      resultTotal = total;
+      resultSubject = subject;
     }
   }
 
   return (
     <p>
-      <span> Highest Mark :</span> {highestSubject} : {highestTotal}
+      <span>
+        {displayType === "highest" ? "Highest Mark:" : "Lowest Mark:"}
+      </span>
+      {resultSubject}: {resultTotal}
     </p>
   );
 };
 
-export default Highsubjecttotal;
+export default SubejctMarksDisplay;

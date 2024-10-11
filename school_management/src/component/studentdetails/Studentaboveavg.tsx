@@ -9,16 +9,22 @@ type Student = {
   }[];
 };
 
-const Studentaboveavg: React.FC<{ students: Student[] }> = ({ students }) => {
-  const [aboveAverageStudents, setAboveAverageStudents] = useState<Student[]>(
-    []
-  );
+type StudentAverageProps = {
+  students: Student[];
+  displayType: "above" | "below";
+};
+
+const StudentAbvoeAndBelowAverage: React.FC<StudentAverageProps> = ({
+  students,
+  displayType,
+}) => {
+  const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
 
   useEffect(() => {
-    findAboveClassAverageStudents();
+    findAverageStudents();
   }, [students]);
 
-  const findAboveClassAverageStudents = () => {
+  const findAverageStudents = () => {
     if (!students.length) return;
 
     const totalMarksForClass = students.reduce((total, student) => {
@@ -30,32 +36,37 @@ const Studentaboveavg: React.FC<{ students: Student[] }> = ({ students }) => {
     }, 0);
 
     const classAverageMarks = totalMarksForClass / students.length;
-
-    const aboveAverage = students.filter((student) => {
+    const filtered = students.filter((student) => {
       const studentTotal = student.marks.reduce(
         (sum, mark) => sum + mark.mark,
         0
       );
-      return studentTotal > classAverageMarks;
+      return displayType === "above"
+        ? studentTotal > classAverageMarks
+        : studentTotal < classAverageMarks;
     });
 
-    setAboveAverageStudents(aboveAverage);
+    setFilteredStudents(filtered);
   };
 
   return (
-    <p>
-      <span>Students Above Average</span>
-      {aboveAverageStudents.length > 0 ? (
+    <div>
+      <span>
+        {displayType === "above"
+          ? "Students Above Average"
+          : "Students Below Average"}
+      </span>
+      {filteredStudents.length > 0 ? (
         <ul>
-          {aboveAverageStudents.map((student) => (
+          {filteredStudents.map((student) => (
             <li key={student.id}>{student.name}</li>
           ))}
         </ul>
       ) : (
-        <p>No students </p>
+        <p>No students</p>
       )}
-    </p>
+    </div>
   );
 };
 
-export default Studentaboveavg;
+export default StudentAbvoeAndBelowAverage;

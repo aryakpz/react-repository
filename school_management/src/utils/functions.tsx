@@ -13,11 +13,14 @@ type Student = {
   id: number;
   marks: Mark[];
 };
+type displayType = string;
 
 type StudentProps = {
   students: Student[];
   selectedStudent?: string;
   selectedSubject?: string;
+  results?: number;
+  displayType?: displayType;
 };
 export const TeacherDisplay: React.FC<{ teacherName: string }> = ({
   teacherName,
@@ -44,6 +47,17 @@ export const ShowStudents: React.FC<{ students: Student[] }> = ({
     ))}
   </ul>
 );
+export const ShowStudentswithId: React.FC<{ students: Student[] }> = ({
+  students,
+}) => (
+  <ul>
+    {students.map((student) => (
+      <li key={student.id}>
+        {student.name} - {student.id}
+      </li>
+    ))}
+  </ul>
+);
 
 export const StudentSelection: React.FC<{
   students: { name: string; id: string }[];
@@ -66,29 +80,16 @@ export const StudentSelection: React.FC<{
 export const StudentDisplay: React.FC<{
   selectedStudent: string;
   selectedSubjects: Mark[];
-}> = ({ selectedStudent, selectedSubjects }) => (
-  <div>
-    <h4>{selectedStudent}'s Subjects:</h4>
-    <ul>
-      {selectedSubjects.map((mark, index) => (
-        <li key={index}>
-          {mark.subject} - {mark.mark}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
-export const StudentmarkDisplay: React.FC<{
-  selectedStudent: string;
-  selectedSubjects: Mark[];
-}> = ({ selectedStudent, selectedSubjects }) => (
+  displayType: displayType;
+}> = ({ selectedStudent, selectedSubjects, displayType }) => (
   <div>
     <h4>{selectedStudent}'s Marks:</h4>
     <ul>
       {selectedSubjects.map((mark, index) => (
         <li key={index}>
-          {mark.subject}: {mark.mark}
+          {displayType === "subject"
+            ? mark.subject
+            : `${mark.subject}: ${mark.mark}`}
         </li>
       ))}
     </ul>
@@ -1010,4 +1011,233 @@ export const CountStudentsAboveMark = (
   } else {
     return <p>Please select both a subject and a cutoff mark.</p>;
   }
+};
+
+export const SubjectPercentageAboveCertainMark: React.FC<StudentProps> = ({
+  students,
+  results,
+}) => {
+  const calculateSubjectPercentages = (): {
+    subject: string;
+    percentage: number;
+  }[] => {
+    if (students.length === 0 || results === undefined) return [];
+
+    const subjectCount: Record<string, { total: number; aboveMark: number }> =
+      {};
+
+    students.forEach((student) => {
+      student.marks.forEach(({ subject, mark }) => {
+        if (!subjectCount[subject]) {
+          subjectCount[subject] = { total: 0, aboveMark: 0 };
+        }
+
+        subjectCount[subject].total++;
+        if (mark > results) {
+          subjectCount[subject].aboveMark++;
+        }
+      });
+    });
+    const subjectPercentages = Object.entries(subjectCount).map(
+      ([subject, count]) => ({
+        subject,
+        percentage: (count.aboveMark / count.total) * 100,
+      })
+    );
+
+    return subjectPercentages;
+  };
+
+  const subjectPercentages = calculateSubjectPercentages();
+
+  const highestPercentageSubject = subjectPercentages.reduce(
+    (highest, current) =>
+      current.percentage > highest.percentage ? current : highest,
+    { subject: "", percentage: 0 }
+  );
+
+  return (
+    <div>
+      <h4>Subject with Highest Percentage Above {results} Mark:</h4>
+      {highestPercentageSubject.subject ? (
+        <p>
+          {highestPercentageSubject.subject}:{" "}
+          {highestPercentageSubject.percentage.toFixed(2)}%
+        </p>
+      ) : (
+        <p>No data available.</p>
+      )}
+    </div>
+  );
+};
+
+export const SubjectPercentageBelowCertainMark: React.FC<StudentProps> = ({
+  students,
+  results,
+}) => {
+  const calculateSubjectPercentages = (): {
+    subject: string;
+    percentage: number;
+  }[] => {
+    if (students.length === 0 || results === undefined) return [];
+
+    const subjectCount: Record<string, { total: number; belowMark: number }> =
+      {};
+
+    students.forEach((student) => {
+      student.marks.forEach(({ subject, mark }) => {
+        if (!subjectCount[subject]) {
+          subjectCount[subject] = { total: 0, belowMark: 0 };
+        }
+        subjectCount[subject].total++;
+        if (mark < results) {
+          subjectCount[subject].belowMark++;
+        }
+      });
+    });
+    const subjectPercentages = Object.entries(subjectCount).map(
+      ([subject, count]) => ({
+        subject,
+        percentage: (count.belowMark / count.total) * 100,
+      })
+    );
+
+    return subjectPercentages;
+  };
+
+  const subjectPercentages = calculateSubjectPercentages();
+  const highestPercentageSubject = subjectPercentages.reduce(
+    (highest, current) =>
+      current.percentage > highest.percentage ? current : highest,
+    { subject: "", percentage: 0 }
+  );
+
+  return (
+    <div>
+      <h4>Subject(s) with Highest Percentage Below {results} Mark:</h4>
+      {highestPercentageSubject.subject ? (
+        <p>
+          {highestPercentageSubject.subject}:{" "}
+          {highestPercentageSubject.percentage.toFixed(2)}%
+        </p>
+      ) : (
+        <p>No data available.</p>
+      )}
+    </div>
+  );
+};
+
+export const SubjectLowPercentageAboveCertainMark: React.FC<StudentProps> = ({
+  students,
+  results,
+}) => {
+  const calculateSubjectPercentages = (): {
+    subject: string;
+    percentage: number;
+  }[] => {
+    if (students.length === 0 || results === undefined) return [];
+
+    const subjectCount: Record<string, { total: number; aboveMark: number }> =
+      {};
+
+    students.forEach((student) => {
+      student.marks.forEach(({ subject, mark }) => {
+        if (!subjectCount[subject]) {
+          subjectCount[subject] = { total: 0, aboveMark: 0 };
+        }
+
+        subjectCount[subject].total++;
+        if (mark > results) {
+          subjectCount[subject].aboveMark++;
+        }
+      });
+    });
+    const subjectPercentages = Object.entries(subjectCount).map(
+      ([subject, count]) => ({
+        subject,
+        percentage: (count.aboveMark / count.total) * 100,
+      })
+    );
+
+    return subjectPercentages;
+  };
+
+  const subjectPercentages = calculateSubjectPercentages();
+  const lowestPercentageSubject = subjectPercentages.reduce(
+    (lowest, current) =>
+      current.percentage < lowest.percentage ? current : lowest,
+    { subject: "", percentage: 100 }
+  );
+
+  return (
+    <div>
+      <h4>Subject(s) with Lowest Percentage Above {results} Mark:</h4>
+      {lowestPercentageSubject.subject ? (
+        <p>
+          {lowestPercentageSubject.subject}:{" "}
+          {lowestPercentageSubject.percentage.toFixed(2)}%
+        </p>
+      ) : (
+        <p>No data available.</p>
+      )}
+    </div>
+  );
+};
+
+export const SubjectLowPercentageBelowCertainMark: React.FC<StudentProps> = ({
+  students,
+  results,
+}) => {
+  const calculateSubjectPercentages = (): {
+    subject: string;
+    percentage: number;
+  }[] => {
+    if (students.length === 0 || results === undefined) return [];
+
+    const subjectCount: Record<string, { total: number; belowMark: number }> =
+      {};
+
+    students.forEach((student) => {
+      student.marks.forEach(({ subject, mark }) => {
+        if (!subjectCount[subject]) {
+          subjectCount[subject] = { total: 0, belowMark: 0 };
+        }
+
+        subjectCount[subject].total++;
+        if (mark < results) {
+          subjectCount[subject].belowMark++;
+        }
+      });
+    });
+
+    const subjectPercentages = Object.entries(subjectCount).map(
+      ([subject, count]) => ({
+        subject,
+        percentage: (count.belowMark / count.total) * 100,
+      })
+    );
+
+    return subjectPercentages;
+  };
+
+  const subjectPercentages = calculateSubjectPercentages();
+  const lowestPercentageSubject = subjectPercentages.reduce(
+    (lowest, current) =>
+      current.percentage < lowest.percentage ? current : lowest,
+    { subject: "", percentage: 100 }
+  );
+
+  return (
+    <div>
+      <h4>Subject(s) with Lowest Percentage Below {results} Mark:</h4>
+      {lowestPercentageSubject.subject ? (
+        <p>
+          {lowestPercentageSubject.subject}:{" "}
+          {lowestPercentageSubject.percentage.toFixed(2)}%
+        </p>
+      ) : (
+        <p>No data available.</p>
+      )}
+    </div>
+  );
 };

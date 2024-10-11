@@ -1,17 +1,21 @@
 import React from "react";
 
-type HighestSubjectPercentageProps = {
-  students: {
-    name: string;
-    marks: {
-      subject: string;
-      mark: number;
-    }[];
+type Student = {
+  name: string;
+  marks: {
+    subject: string;
+    mark: number;
   }[];
 };
 
-const HighestSubjectPercentage: React.FC<HighestSubjectPercentageProps> = ({
+type SubjectPercentageProps = {
+  students: Student[];
+  displayType: "highest" | "lowest";
+};
+
+const SubjectPercentage: React.FC<SubjectPercentageProps> = ({
   students,
+  displayType,
 }) => {
   const subjectTotals: Record<string, { totalMarks: number; count: number }> =
     {};
@@ -26,28 +30,42 @@ const HighestSubjectPercentage: React.FC<HighestSubjectPercentageProps> = ({
     });
   });
 
-  let highestPercentage = 0;
-  const highestPercentageSubjects: string[] = [];
+  let extremePercentage = displayType === "highest" ? 0 : Infinity;
+  const percentageSubjects: string[] = [];
 
   for (const subject in subjectTotals) {
     const average =
       subjectTotals[subject].totalMarks / subjectTotals[subject].count;
 
-    if (average > highestPercentage) {
-      highestPercentage = average;
-      highestPercentageSubjects.length = 0;
-      highestPercentageSubjects.push(subject);
-    } else if (average === highestPercentage) {
-      highestPercentageSubjects.push(subject);
+    if (displayType === "highest") {
+      if (average > extremePercentage) {
+        extremePercentage = average;
+        percentageSubjects.length = 0;
+        percentageSubjects.push(subject);
+      } else if (average === extremePercentage) {
+        percentageSubjects.push(subject);
+      }
+    } else if (displayType === "lowest") {
+      if (average < extremePercentage) {
+        extremePercentage = average;
+        percentageSubjects.length = 0;
+        percentageSubjects.push(subject);
+      } else if (average === extremePercentage) {
+        percentageSubjects.push(subject);
+      }
     }
   }
 
   return (
     <div>
-      <h3>Highest Percentage:</h3>
+      <h3>
+        {displayType === "highest"
+          ? "Subjects with Highest Percentage:"
+          : "Subjects with Lowest Percentage:"}
+      </h3>
 
       <ul>
-        {highestPercentageSubjects.map((subject, index) => (
+        {percentageSubjects.map((subject, index) => (
           <li key={index}>{subject}</li>
         ))}
       </ul>
@@ -55,4 +73,4 @@ const HighestSubjectPercentage: React.FC<HighestSubjectPercentageProps> = ({
   );
 };
 
-export default HighestSubjectPercentage;
+export default SubjectPercentage;

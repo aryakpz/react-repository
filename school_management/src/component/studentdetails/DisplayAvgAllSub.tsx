@@ -1,17 +1,23 @@
 import React from "react";
 
-type Avgprops = {
-  students: {
-    name: string;
-    marks: {
-      subject: string;
-      mark: number;
-    }[];
+type Student = {
+  name: string;
+  marks: {
+    subject: string;
+    mark: number;
   }[];
 };
 
-const DisplayAvgAllSub: React.FC<Avgprops> = ({ students }) => {
-  const subjectTotals: {
+type CombinedDisplayProps = {
+  students: Student[];
+  displayType: "total" | "average";
+};
+
+const DisplaymarkofAllSubject: React.FC<CombinedDisplayProps> = ({
+  students,
+  displayType,
+}) => {
+  const subjectData: {
     [key: string]: { totalMarks: number; count: number };
   } = {};
 
@@ -19,31 +25,37 @@ const DisplayAvgAllSub: React.FC<Avgprops> = ({ students }) => {
     student.marks.forEach((mark) => {
       const subject = mark.subject;
 
-      if (!subjectTotals[subject]) {
-        subjectTotals[subject] = { totalMarks: 0, count: 0 };
+      if (!subjectData[subject]) {
+        subjectData[subject] = { totalMarks: 0, count: 0 };
       }
 
-      subjectTotals[subject].totalMarks += mark.mark;
-      subjectTotals[subject].count += 1;
+      subjectData[subject].totalMarks += mark.mark;
+      subjectData[subject].count += 1;
     });
   });
 
-  const averages = Object.keys(subjectTotals).map((subject) => {
-    const { totalMarks, count } = subjectTotals[subject];
-    const average = count > 0 ? totalMarks / count : 0;
+  const results = Object.keys(subjectData).map((subject) => {
+    const { totalMarks, count } = subjectData[subject];
+    const result =
+      displayType === "average" && count > 0 ? totalMarks / count : totalMarks;
+
     return (
       <li key={subject}>
-        {subject}: {average.toFixed(2)}
+        {subject}: {displayType === "average" ? result.toFixed(2) : result}
       </li>
     );
   });
 
   return (
-    <p>
-      <span>Average Marks per Subject:</span>
-      <ul>{averages}</ul>
-    </p>
+    <div>
+      <span>
+        {displayType === "average"
+          ? "Average Marks per Subject:"
+          : "Total Marks per Subject:"}
+      </span>
+      <ul>{results}</ul>
+    </div>
   );
 };
 
-export default DisplayAvgAllSub;
+export default DisplaymarkofAllSubject;

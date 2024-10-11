@@ -9,30 +9,41 @@ type Student = {
   }[];
 };
 
-const ShowEachAvg: React.FC<{ students: Student[] }> = ({ students }) => {
+type ShowMarksProps = {
+  students: Student[];
+  displayType: "total" | "average";
+};
+
+const MarkofEachsubject: React.FC<ShowMarksProps> = ({
+  students,
+  displayType,
+}) => {
+  const calculateTotalMarks = (marks: { subject: string; mark: number }[]) => {
+    return marks.reduce((total, current) => total + current.mark, 0);
+  };
+
   const calculateAverageMarks = (
     marks: { subject: string; mark: number }[]
   ) => {
-    const totalMarks = marks.reduce(
-      (total, current) => total + current.mark,
-      0
-    );
+    const totalMarks = calculateTotalMarks(marks);
     return marks.length > 0 ? totalMarks / marks.length : 0;
   };
 
   return (
-    <p>
-      <span>Average Marks</span>
+    <div>
+      <span>{displayType === "total" ? "Total Marks" : "Average Marks"}</span>
       <ul>
         {students.map((student) => (
           <li key={student.id}>
-            {student.name}
-            {calculateAverageMarks(student.marks)}
+            {student.name}:{" "}
+            {displayType === "total"
+              ? calculateTotalMarks(student.marks)
+              : calculateAverageMarks(student.marks).toFixed(2)}
           </li>
         ))}
       </ul>
-    </p>
+    </div>
   );
 };
 
-export default ShowEachAvg;
+export default MarkofEachsubject;

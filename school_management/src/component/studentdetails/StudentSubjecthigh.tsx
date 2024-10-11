@@ -9,69 +9,99 @@ type Student = {
   }[];
 };
 
-type HighestPercentageSubjectProps = {
-  students: Student[];
-  selectedStudent: string;
+type PercentageType = "high" | "low";
+
+type PercentageSubject = {
+  subject: string;
+  percentage: number;
 };
 
-const StudentPercentageHigh: React.FC<HighestPercentageSubjectProps> = ({
+type StudentPercentageProps = {
+  students: Student[];
+  selectedStudent: string;
+  type: PercentageType;
+};
+const StudentPercentageHigh: React.FC<StudentPercentageProps> = ({
   students,
   selectedStudent,
+  type,
 }) => {
-  const [highestPercentageSubjects, setHighestPercentageSubjects] = useState<
-    { subject: string; percentage: number }[]
-  >([]);
+  const [percentageSubject, setPercentageSubject] =
+    useState<PercentageSubject | null>(null);
 
   useEffect(() => {
     if (students.length > 0 && selectedStudent) {
-      calculateHighestPercentageSubjects();
+      calculatePercentageSubject();
     }
   }, [students, selectedStudent]);
 
-  const calculateHighestPercentageSubjects = () => {
+  const calculatePercentageSubject = () => {
     const specificStudent = students.find(
       (student) => student.name === selectedStudent
     );
     if (!specificStudent) return;
 
-    const subjectPercentages: { [subject: string]: number } = {};
+    let bestSubject: PercentageSubject | null = null;
 
     specificStudent.marks.forEach((mark) => {
-      let studentsAboveCount = 0;
+      let relevantCount = 0;
+      let totalCount = 0;
 
       students.forEach((student) => {
         const studentMarkForSubject = student.marks.find(
           (m) => m.subject === mark.subject
         );
-        if (studentMarkForSubject && studentMarkForSubject.mark > mark.mark) {
-          studentsAboveCount++;
+
+        if (studentMarkForSubject) {
+          totalCount++; // Count this student for this subject
+
+          // Increment the count based on the type
+          const isHigher = studentMarkForSubject.mark > mark.mark;
+          const isLower = studentMarkForSubject.mark < mark.mark;
+
+          if (type === "high" && isHigher) {
+            relevantCount++;
+          } else if (type === "low" && isLower) {
+            relevantCount++;
+          }
         }
       });
 
-      const percentage = (studentsAboveCount / students.length) * 100;
-      subjectPercentages[mark.subject] = percentage;
+      // Calculate percentage if there are students with marks in the subject
+      if (totalCount > 0) {
+        const percentage = (relevantCount / totalCount) * 100;
+
+        // Determine if this subject is the best one based on the type
+        if (
+          bestSubject === null ||
+          (type === "high" && percentage > bestSubject.percentage) ||
+          (type === "low" && percentage < bestSubject.percentage)
+        ) {
+          bestSubject = { subject: mark.subject, percentage };
+        }
+      }
     });
 
-    const highestPercentage = Math.max(...Object.values(subjectPercentages));
-    const subjectsWithHighestPercentage = Object.entries(subjectPercentages)
-      .filter(([_, percentage]) => percentage === highestPercentage)
-      .map(([subject, percentage]) => ({ subject, percentage }));
-
-    setHighestPercentageSubjects(subjectsWithHighestPercentage);
+    setPercentageSubject(bestSubject);
   };
 
   return (
-    <p>
-      <span>Highest Percentage{selectedStudent}</span>
-
+    <div>
+      <h4>
+        {type === "high" ? "Highest" : "Lowest"} Percentage for{" "}
+        {selectedStudent}
+      </h4>
       <ul>
-        {highestPercentageSubjects.map(({ subject, percentage }) => (
-          <li key={subject}>
-            {subject}: {percentage.toFixed(2)}%
+        {percentageSubject ? (
+          <li>
+            {percentageSubject.subject}:{" "}
+            {percentageSubject.percentage.toFixed(2)}%
           </li>
-        ))}
+        ) : (
+          <li>No data available</li>
+        )}
       </ul>
-    </p>
+    </div>
   );
 };
 

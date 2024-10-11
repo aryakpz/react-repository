@@ -9,69 +9,70 @@ type Student = {
   }[];
 };
 
-const PercentageAboveAvg: React.FC<{ students: Student[] }> = ({
+type PercentageInSubjectProps = {
+  students: Student[];
+  displayType: "above" | "below";
+};
+
+const PercentageOfStudentAverageMark: React.FC<PercentageInSubjectProps> = ({
   students,
+  displayType,
 }) => {
-  const [percentages, setPercentages] = useState<
-    { subject: string; percentage: number }[]
-  >([]);
+  const [percentage, setPercentage] = useState<number | null>(null);
 
   useEffect(() => {
-    calculatePercentagesAboveAverage();
-  }, [students]);
+    if (students.length > 0) {
+      calculatePercentage();
+    }
+  }, [students, displayType]);
 
-  const calculatePercentagesAboveAverage = () => {
-    const subjectTotals: {
-      [subject: string]: { total: number; count: number };
-    } = {};
+  const calculatePercentage = () => {
+    const subjectTotals: { [subject: string]: number } = {};
+    const subjectCounts: { [subject: string]: number } = {};
 
     students.forEach((student) => {
-      student.marks.forEach(({ subject, mark }) => {
-        if (!subjectTotals[subject]) {
-          subjectTotals[subject] = { total: 0, count: 0 };
-        }
-        subjectTotals[subject].total += mark;
-        subjectTotals[subject].count += 1;
+      student.marks.forEach((mark) => {
+        subjectTotals[mark.subject] =
+          (subjectTotals[mark.subject] || 0) + mark.mark;
+        subjectCounts[mark.subject] = (subjectCounts[mark.subject] || 0) + 1;
       });
     });
 
     const subjectAverages: { [subject: string]: number } = {};
-    Object.keys(subjectTotals).forEach((subject) => {
+    for (const subject in subjectTotals) {
       subjectAverages[subject] =
-        subjectTotals[subject].total / subjectTotals[subject].count;
+        subjectTotals[subject] / subjectCounts[subject];
+    }
+
+    let studentsCount = 0;
+
+    students.forEach((student) => {
+      const scoredInAtLeastOneSubject = student.marks.some((mark) =>
+        displayType === "above"
+          ? mark.mark > subjectAverages[mark.subject]
+          : mark.mark < subjectAverages[mark.subject]
+      );
+      if (scoredInAtLeastOneSubject) {
+        studentsCount++;
+      }
     });
-
-    const aboveAveragePercentages: { subject: string; percentage: number }[] =
-      [];
-
-    Object.keys(subjectAverages).forEach((subject) => {
-      const aboveAverageCount = students.filter((student) =>
-        student.marks.some(
-          (mark) =>
-            mark.subject === subject && mark.mark > subjectAverages[subject]
-        )
-      ).length;
-
-      const percentage = (aboveAverageCount / students.length) * 100;
-
-      aboveAveragePercentages.push({ subject, percentage });
-    });
-
-    setPercentages(aboveAveragePercentages);
+    const calculatedPercentage = (studentsCount / students.length) * 100;
+    setPercentage(calculatedPercentage);
   };
 
   return (
     <p>
-      <span>Percentage of Students above average</span>
-      <ul>
-        {percentages.map(({ subject, percentage }) => (
-          <li key={subject}>
-            {subject}: {percentage.toFixed(2)}%
-          </li>
-        ))}
-      </ul>
+      <span>
+        Percentage of Students {displayType === "above" ? "above" : "below"}{" "}
+        average:
+      </span>
+      {percentage !== null ? (
+        <p>{percentage.toFixed(2)}%</p>
+      ) : (
+        <p>No data available.</p>
+      )}
     </p>
   );
 };
 
-export default PercentageAboveAvg;
+export default PercentageOfStudentAverageMark;

@@ -9,16 +9,19 @@ type Student = {
   }[];
 };
 
-const ShowAboveAvgClass: React.FC<{ students: Student[] }> = ({ students }) => {
-  const [aboveAverageStudents, setAboveAverageStudents] = useState<Student[]>(
-    []
-  );
+type displayType = "above" | "below";
+
+const ClassAverageInallSubject: React.FC<{
+  students: Student[];
+  displayType: displayType;
+}> = ({ students, displayType }) => {
+  const [averageStudents, setAverageStudents] = useState<Student[]>([]);
 
   useEffect(() => {
-    findAboveAverageStudents();
+    findStudentsByAverage();
   }, [students]);
 
-  const findAboveAverageStudents = () => {
+  const findStudentsByAverage = () => {
     const subjectTotals: {
       [subject: string]: { total: number; count: number };
     } = {};
@@ -39,29 +42,35 @@ const ShowAboveAvgClass: React.FC<{ students: Student[] }> = ({ students }) => {
         subjectTotals[subject].total / subjectTotals[subject].count;
     });
 
-    const studentsAboveAverage = students.filter((student) =>
-      student.marks.every(
-        ({ subject, mark }) => mark > subjectAverages[subject]
+    const filteredStudents = students.filter((student) =>
+      student.marks.every(({ subject, mark }) =>
+        displayType === "above"
+          ? mark > subjectAverages[subject]
+          : mark < subjectAverages[subject]
       )
     );
 
-    setAboveAverageStudents(studentsAboveAverage);
+    setAverageStudents(filteredStudents);
   };
 
   return (
-    <p>
-      <span> Above Average</span>
+    <div>
+      <p>
+        <span>
+          {displayType === "above" ? "Above Average" : "Below Average"}
+        </span>
+      </p>
       <ul>
-        {aboveAverageStudents.length > 0 ? (
-          aboveAverageStudents.map((student) => (
+        {averageStudents.length > 0 ? (
+          averageStudents.map((student) => (
             <li key={student.id}>{student.name}</li>
           ))
         ) : (
-          <li>No students .</li>
+          <li>No students.</li>
         )}
       </ul>
-    </p>
+    </div>
   );
 };
 
-export default ShowAboveAvgClass;
+export default ClassAverageInallSubject;

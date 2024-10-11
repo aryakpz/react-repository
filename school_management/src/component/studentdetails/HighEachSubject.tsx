@@ -9,14 +9,23 @@ type Student = {
   }[];
 };
 
-const HighEachSubject: React.FC<{ students: Student[] }> = ({ students }) => {
-  const [topScorers, setTopScorers] = useState<
+type displayType = "high" | "low";
+
+const HighestandLowestMarkInEachSubject: React.FC<{
+  students: Student[];
+  displayType: displayType;
+}> = ({ students, displayType }) => {
+  const [scorers, setScorers] = useState<
     { subject: string; studentNames: string[]; mark: number }[]
   >([]);
 
   useEffect(() => {
-    findTopScorers();
-  }, [students]);
+    if (displayType === "high") {
+      findTopScorers();
+    } else {
+      findLowestScorers();
+    }
+  }, [students, displayType]);
 
   const findTopScorers = () => {
     if (!students.length) return;
@@ -50,21 +59,60 @@ const HighEachSubject: React.FC<{ students: Student[] }> = ({ students }) => {
       studentNames: Array.from(subjectTopScorers[subject].students),
     }));
 
-    setTopScorers(topScorersArray);
+    setScorers(topScorersArray);
+  };
+
+  const findLowestScorers = () => {
+    if (!students.length) return;
+
+    const subjectLowestScorers: {
+      [subject: string]: { minMark: number; students: Set<string> };
+    } = {};
+
+    students.forEach((student) => {
+      student.marks.forEach(({ subject, mark }) => {
+        if (!subjectLowestScorers[subject]) {
+          subjectLowestScorers[subject] = {
+            minMark: mark,
+            students: new Set([student.name]),
+          };
+        } else {
+          const subjectData = subjectLowestScorers[subject];
+          if (mark < subjectData.minMark) {
+            subjectData.minMark = mark;
+            subjectData.students = new Set([student.name]);
+          } else if (mark === subjectData.minMark) {
+            subjectData.students.add(student.name);
+          }
+        }
+      });
+    });
+
+    const lowestScorersArray = Object.keys(subjectLowestScorers).map(
+      (subject) => ({
+        subject,
+        mark: subjectLowestScorers[subject].minMark,
+        studentNames: Array.from(subjectLowestScorers[subject].students),
+      })
+    );
+
+    setScorers(lowestScorersArray);
   };
 
   return (
-    <p>
-      <span>Highest Scorers </span>
+    <div>
+      <span>
+        {displayType === "high" ? "Highest Scorers" : "Lowest Scorers"}
+      </span>
       <ul>
-        {topScorers.map(({ subject, studentNames, mark }) => (
+        {scorers.map(({ subject, studentNames, mark }) => (
           <li key={subject}>
-            <strong>{subject}:</strong> {studentNames} - {mark}
+            <strong>{subject}:</strong> {studentNames.join(", ")} - {mark}
           </li>
         ))}
       </ul>
-    </p>
+    </div>
   );
 };
 
-export default HighEachSubject;
+export default HighestandLowestMarkInEachSubject;

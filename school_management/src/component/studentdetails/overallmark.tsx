@@ -1,29 +1,42 @@
 import React from "react";
 
-type Overallmarkprops = {
-  students: {
-    name: string;
-    marks: {
-      subject: string;
-      mark: number;
-    }[];
+type Student = {
+  name: string;
+  marks: {
+    subject: string;
+    mark: number;
   }[];
 };
 
-const Displayoverallmark: React.FC<Overallmarkprops> = ({ students }) => {
-  let total = 0;
-  let count = 0;
+type OverallDisplayProps = {
+  students: Student[];
+  displayType: "average" | "total";
+};
+
+const Displayoverallmark: React.FC<OverallDisplayProps> = ({
+  students,
+  displayType,
+}) => {
+  let totalMarks = 0;
+  let totalCount = 0;
+
   students.forEach((student) => {
     student.marks.forEach((mark) => {
-      total += mark.mark;
-      count++;
+      totalMarks += mark.mark;
+      totalCount++;
     });
   });
 
+  const overallAverage = totalCount > 0 ? totalMarks / totalCount : 0;
+
   return (
     <p>
-      <span>Overall Mark :</span>
-      {total}
+      <span>
+        {displayType === "average"
+          ? "Overall average marks:"
+          : "Overall total marks:"}
+      </span>{" "}
+      {displayType === "average" ? overallAverage.toFixed(2) : totalMarks}
     </p>
   );
 };

@@ -1,29 +1,47 @@
-import React from 'react';
+import React from "react";
 
-type TopScorerDisplayProps ={
-    students: {
-        name: string;
-        marks: {
-            subject: string;
-            mark: number;
-        }[];
+// Define the props type
+type ScorerDisplayProps = {
+  students: {
+    name: string;
+    marks: {
+      subject: string;
+      mark: number;
     }[];
-}
+  }[];
+  displayType: "top" | "low"; // Type to specify if we want the top or low scorer
+};
 
-const TopScorerstudent: React.FC<TopScorerDisplayProps> = ({ students }) => {
-    const topScorer = students.reduce(
-        (topStudent, student) => {
-            const totalMarks = student.marks.reduce((sum, mark) => sum + mark.mark, 0);
-            return totalMarks > topStudent.total ? { name: student.name, total: totalMarks } : topStudent;
-        },
-        { name: '', total: 0 }
-    );
+const TopScorerstudent: React.FC<ScorerDisplayProps> = ({
+  students,
+  displayType,
+}) => {
+  const initialScorer = {
+    name: "",
+    total: displayType === "low" ? Infinity : -Infinity,
+  };
 
-    return (
-        <p>
-            <span>Top Scorer: </span> {topScorer.name} - {topScorer.total} Marks
-        </p>
-    );
+  const scorer = students.reduce((currentScorer, student) => {
+    const totalMarks = student.marks.reduce((sum, mark) => sum + mark.mark, 0);
+
+    if (displayType === "top") {
+      return totalMarks > currentScorer.total
+        ? { name: student.name, total: totalMarks }
+        : currentScorer;
+    } else {
+      // Low scorer
+      return totalMarks < currentScorer.total
+        ? { name: student.name, total: totalMarks }
+        : currentScorer;
+    }
+  }, initialScorer);
+
+  return (
+    <p>
+      <span>{displayType === "top" ? "Top Scorer: " : "Lowest Scorer: "}</span>
+      {scorer.name} - {scorer.total} Marks
+    </p>
+  );
 };
 
 export default TopScorerstudent;

@@ -35,7 +35,7 @@ import BelowAtleastOne from "../src/component/studentdetails/Belowatleastone";
 import React, { useState, useEffect } from "react";
 import TeacherDisplay from "../src/component/studentdetails/Teacher";
 import StudentDisplay from "../src/component/studentdetails/display";
-import ShowStudents from "../src/component/studentdetails/showname";
+import ShowStudents from "../src/component/studentdetails/showstudents";
 import StudentmarkDisplay from "../src/component/studentdetails/displaymark";
 import StudentSelection from "../src/component/studentdetails/studentselection";
 import "./details.css";
